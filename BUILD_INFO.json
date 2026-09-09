@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 3,
+  "packageVersion": "1.7.1",
+  "displayVersion": "V1.7.1",
+  "builtAt": "2026-09-09T21:49:20.6833273+08:00",
+  "artifacts": [
+    {
+      "edition": "formal",
+      "file": "叉燒正式版_20260909-2148.exe",
+      "sizeBytes": 17524224,
+      "sha256": "36b7600155200acc5f3a277f8e1fe29831adec635b0c5e62076af59557999025"
+    }
+  ],
+  "logs": {
+    "formal": "build-formal.log"
+  },
+  "rustCache": "src-tauri/target/release",
+  "releaseRetention": "previous-release-preserved",
+  "sourceSnapshotSha256": "53a766f1271b92f0fb0f0a139fd6ab0a61f9d8820cf303257637cb37c0bd9ba3",
+  "manualAcceptance": "pending"
+}
