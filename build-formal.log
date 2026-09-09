@@ -1,0 +1,2084 @@
+=== ChaShao build log ===
+edition=formal
+root=H:\Users\Fehu-play\Desktop\性平案件管理工具
+dist=H:\Users\Fehu-play\Desktop\性平案件管理工具\.local\hotfix-investigation-route\staging
+start=2026-09-09T21:42:23
+
+============================================================
+ChaShao formal release build
+Project: H:\Users\Fehu-play\Desktop\性平案件管理工具
+Output : H:\Users\Fehu-play\Desktop\性平案件管理工具\.local\hotfix-investigation-route\staging
+Log    : H:\Users\Fehu-play\Desktop\性平案件管理工具\.local\hotfix-investigation-route\staging\build-formal.log
+============================================================
+> node --version
+v24.11.0
+> npm.cmd --version
+11.6.1
+> cargo --version
+cargo 1.95.0 (f2d3ce0bd 2026-03-21)
+
+--- BUILD-201 發行前強制完整檢查 ---
+> npm.cmd run check:full
+
+> chashao-case-manager@1.7.1 check:full
+> npm run check && npm run rust:test
+
+
+> chashao-case-manager@1.7.1 check
+> npm run metadata:check && npm run license:check && npm run a11y:check && npm run test && npm run lint && npm run format:check && npm run rust:fmt:check
+
+
+> chashao-case-manager@1.7.1 metadata:check
+> node scripts/check-project-metadata.mjs
+
+metadata OK：1.7.1 / V1.7.1；state schema 10；SQLite migration 7；backup envelope v2；Node 1483／Rust 143
+
+> chashao-case-manager@1.7.1 license:check
+> node scripts/check-license-inventory.mjs
+
+[check-license-inventory] 通過：Rust crate 505 項、隨附函式庫 2 個
+  PDF.js 版本：6.3.289；模組與離線資源 203 檔均通過 SHA-256 核對
+  libs/jszip.min.js  acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e
+  libs/pdf-lib.min.js  0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f
+
+> chashao-case-manager@1.7.1 a11y:check
+> node scripts/check-a11y-labels.mjs
+
+[check-a11y-labels] 未命名的表單控制項：0 個（維持基線，未新增）
+
+> chashao-case-manager@1.7.1 test
+> node scripts/run-node-tests.mjs
+
+✔ 可及名稱稽核腳本存在且已納入 check gate (2.0868ms)
+✔ 未命名的表單控制項不得超過目前基線 (103.4908ms)
+✔ 棘輪必須雙向生效：數量變少時也要求同步調低基線 (0.2764ms)
+✔ 基線已降到 0：任何沒有可及名稱的新控制項都會被擋下 (0.1106ms)
+✔ 稽核不得把閉合標籤誤算成控制項 (0.1586ms)
+✔ 三種可及名稱來源都算數，不得只認 aria-label (0.1256ms)
+✔ 全域搜尋輸入必須有可及名稱 (0.2169ms)
+✔ 視覺隱藏工具類別不得讓輔助技術也讀不到 (0.9388ms)
+✔ GUARD-003：載入中的 Actions 方法名稱不得重複 (151.2293ms)
+✔ V1-AI-001：模板視窗提供規範包下載與 AI 回傳 JSON 的明確本機入口 (45.5119ms)
+✔ V1-AI-001：下載規範包不讀案件資料、不呼叫網路 (1.3355ms)
+✔ V1-AI-002：UI 匯入固定先預檢、再規劃、確認、留雜湊並提交 AI 草稿 (2.0426ms)
+✔ V1-SPEC-001：變數目錄提供型別、個資等級與合成預覽，不提供可執行 selector (7.0341ms)
+✔ V1-SPEC-001：合法結構化模板與 allowlist 條件可通過並安全渲染 (9.344ms)
+✔ V1-SPEC-001：未知變數、運算子、區塊與額外欄位一律拒絕 (1.6796ms)
+✔ V1-SEC-001：script、事件屬性、外部網址與 prototype pollution 欄位拒絕 (1.7296ms)
+✔ V1-AI-001：規範包只有契約、合成資料與隱私提示，不讀案件或外連 (1.431ms)
+✔ V1-AI-002：合法 AI 回傳只形成 AI 草稿，不能直接發布 (1.5261ms)
+✔ V1-AI-002：未來版本、錯誤格式或任一非法模板使整包失敗且不產生部分草稿 (4.8119ms)
+✔ V1-AI-002：AI 回傳大小與模板數量有硬限制 (40.6279ms)
+✔ appealDeadline uses partyKey instead of title for dedup across multiple normalizations (40.9588ms)
+✔ FIX-012：申復期限屆滿後仍保持待確認，不得由系統自行寫成未申復 (14.8971ms)
+✔ FIX-012：已由舊版系統自動關閉且未經人工修改的申復節點會清回待確認 (14.5362ms)
+✔ appealReceived auto-created from appealDeadline status uses partyKey dedup (11.7364ms)
+✔ direct appealReceived creates per-party appeal review panel (10.5574ms)
+✔ remakeDecision delivery opens a new appeal deadline branch (12.5537ms)
+✔ case side panel has a dedicated appeal tab (1.4356ms)
+✔ appeal panel summarizes per-party appeal lifecycle without unconditional display (7.0671ms)
+✔ FIX-012：申復期間屆滿後仍為待人工確認，不得自動視為未申復 (51.4107ms)
+✔ 申復期間內（尚未屆滿）→ 仍為待辦（非 done/over） (31.9887ms)
+✔ 剛屆滿、緩衝期內 → 仍 over 提示（可能尚收到申復書） (28.9607ms)
+✔ FIX-012：未經人工確認的屆滿申復期限仍列為待辦 (10.2129ms)
+✔ 建立案件的關鍵日期區必須有收件日欄位 (1.0769ms)
+✔ 收件日是選填，且說明為什麼可以留空 (0.1847ms)
+✔ 儲存時把收件日寫進 applicationReceived 節點 (0.2095ms)
+✔ 日期沒變時不得重寫節點，否則會洗掉節點原有的說明 (0.1427ms)
+✔ 清空收件日要先說明後果再確認，不得默默照做或默默忽略 (0.1511ms)
+✔ 開窗時要把既有收件日帶回欄位，編輯才不會把它清掉 (0.1226ms)
+✔ 收件日早於知悉日時要提醒，但不硬性擋下 (0.1878ms)
+✔ 收件日納入草稿欄位，中途關閉不會白填 (0.1301ms)
+✔ 以收件日起算的法定期限規則都還在，且起算點正確 (0.3119ms)
+✔ 修正後的說明不得再叫使用者去節點填收件日 (2.9569ms)
+✔ ARC-001：EventActions 將 DOM 表單與純驗證拆為明確模組 (2.4994ms)
+✔ ARC-002：Render、Report、Bulk 與 archive 規則有獨立純模組 (7.4953ms)
+✔ ARC-002：純路徑與報告呈現規則可脫離 UI 單元測試 (5.5783ms)
+✔ ARC-003：新拆分模組啟用 no-undef 與 no-unused-vars 強守門 (6.7146ms)
+✔ 取消儲存位置不讀取附件、不壓縮也不登記封存紀錄 (5.52ms)
+✔ 選定位置後先完成儲存，再封存獨立案件快照並登記紀錄 (1.6773ms)
+✔ 選擇儲存位置期間切換工作區，停止封存 (2.2384ms)
+✔ 確認視窗尚未關閉時，重複點擊不會啟動第二個封存流程 (1.6794ms)
+✔ 壓縮取消按鈕呼叫原生取消，完成後清理控制項、不登記紀錄 (2.2983ms)
+✔ artifact boundary is documented for AI collaborators (17.4951ms)
+✔ .gitignore excludes generated caches, dist folders, deliverable exe/logs, and historical backups (0.843ms)
+✔ 事件刪除由單一後端動作同時處理事件與附件 (0.9305ms)
+✔ 原有附件只先標記移除，事件寫入成功後才刪除原檔 (0.3897ms)
+✔ QA-202 fixture has stable identifiers and expected high-risk records (1.2869ms)
+✔ person deletion preflight finds meeting, event, and document references by stable ID (7.411ms)
+✔ folder rescan preserves archive metadata only for the same unchanged file (3.6821ms)
+✔ attachment verification distinguishes verified, missing, mismatch, and backend failure (2.5797ms)
+✔ daily task deletion awaits one atomic attachment batch before removing task metadata (3.4624ms)
+✔ attachment download has one Blob path and no asset URL fallback (5.3633ms)
+✔ Tauri adapter exposes full verification result and atomic batch deletion (2.1386ms)
+✔ _base64ToBlob 已改為 async (3.8854ms)
+✔ 小檔（< 87000 char）走同步 atob path (0.1419ms)
+✔ 大檔走 fetch dataURL 原生解碼 path (0.1276ms)
+✔ fetch path 失敗時 fallback 回 atob (0.114ms)
+✔ 小檔 atob 失敗時 fallthrough 到 fetch (0.12ms)
+✔ getFile caller 已 await _base64ToBlob (0.1315ms)
+✔ 空 base64 直接回空 Blob（不嘗試解碼） (1.7028ms)
+✔ integration: 小檔 round-trip — base64 → Blob → bytes 正確 (2.2918ms)
+✔ integration: 中等大小走 fetch path（mock fetch 確認被呼叫） (30.2418ms)
+✔ integration: 空 base64 回空 Blob (1.3004ms)
+✔ #28 phase 2 step 5: arrayBufferToBase64Async 對大檔產生與同步版相同的 base64 (259.5378ms)
+✔ #28 phase 2 step 5: arrayBufferToBase64Async 小檔（< 1MB）走同步 fast path (6.7509ms)
+✔ #28 phase 2 step 5: arrayBufferToBase64Async 大檔會在 chunk 間 yield (128.4445ms)
+✔ ATT-200：附件草稿是深度分開的物件，取消不會改到原紀錄或刪除原檔 (2.4233ms)
+✔ ATT-200：新增附件後取消只清除本次新增檔案，清除完成前視窗不關閉 (7.6067ms)
+✔ ATT-200：父紀錄確認後保留新增附件，才刪除標記移除的原檔 (1.0743ms)
+✔ ATT-200：提交後刪除舊檔失敗會回報原附件，供父紀錄放回清單 (1.0602ms)
+✔ ATT-200：取消清除失敗會保留工作階段與視窗，讓使用者重試 (1.0693ms)
+✔ ATT-200：部分取消成功後只重試尚未清除的新增檔案 (0.8984ms)
+✔ ATT-200：父紀錄已進入待重試寫入時禁止取消附件工作階段 (1.4008ms)
+✔ 掃描範圍涵蓋節點、大事紀、簡化程序、日常任務與文稿 (3.2534ms)
+✔ 引用結果帶得出是哪一筆、在哪個案件 (0.2785ms)
+✔ 沒有被引用的附件回傳空陣列 (0.7753ms)
+✔ 仍有引用時只允許解除關聯，並列出全部引用位置 (0.2802ms)
+✔ 沒有引用時才允許刪除原檔 (0.1535ms)
+✔ 只被單一處引用時同樣不得直接刪除 (0.1593ms)
+✔ 掃描是純讀取，不改動來源資料 (0.5396ms)
+✔ 標籤正規化會去空白、去重並維持順序 (0.5466ms)
+✔ 缺中繼資料時回傳空字串而非 undefined (0.1665ms)
+✔ 可依標籤、類型與關鍵字篩選附件 (0.5152ms)
+✔ 模組只處理引用關係，不複製實體檔 (0.4594ms)
+✔ 附件逐一掃描，同案重入不重複排程，完成後一次更新結果 (5.4833ms)
+✔ 切換 case 後舊掃描不再派送，也不污染新畫面 (0.8903ms)
+✔ 切換 workspace 後舊掃描不再派送，也不污染新畫面 (0.6227ms)
+✔ 掃描拒絕不產生未處理拒絕，也不把案件永久標為已掃描 (0.7967ms)
+✔ event attachment copy only describes the Tauri workspace attachment store (440.5138ms)
+✔ manuals document the same attachment storage boundary (3.1713ms)
+✔ backup modal and backup menu actions use delegated data-action handlers (3.7018ms)
+✔ #36 phase 4 sbSync status bar chip delegates to refreshFromSqlite (3.3225ms)
+✔ #36 startup cache clear action is available from backup center (0.5521ms)
+✔ 腳本內的門檻與實作計畫 §11.3 一致 (1.0828ms)
+✔ 基準必須標示未涵蓋的實機項目，避免被誤用為效能承諾 (0.126ms)
+✔ 超過門檻必須以非零 exit code 失敗 (0.1264ms)
+✔ 量測目標不得回傳空值，否則量到的是空函式 (0.1154ms)
+✔ benchmark:thresholds 已註冊為可重跑指令 (1.2105ms)
+✔ 以縮小資料量實際跑一次，四項門檻都必須通過 (118.4229ms)
+✔ 案件交付 PDF 固定包含封面與交付範圍總覽 (7.4924ms)
+✔ 調查小組組成與調查會議欄位、資料、報告分流 (11.7127ms)
+✔ 大量匯出操作組入獨立的交付範本操作 (0.8906ms)
+✔ 大量匯出與交付範本操作套用統一排版後仍維持可掌握大小 (0.2453ms)
+✔ bulk node report deadline table separates legal appeal and internal reminders (5.2552ms)
+✔ 案件費用：舊案件沒有資料時可正規化為兩個空分類 (4.651ms)
+✔ 案件費用：null 或異常分類與明細會安全降級，不中斷案件畫面 (1.3551ms)
+✔ 案件費用：依數量乘單價計算兩類小計與案件合計 (23.4819ms)
+✔ 案件費用：負單價與無效數量不會產生負成本或 NaN (0.939ms)
+✔ DATA-001：案件費用正規化保留未知欄位且拒絕未來 schema (1.0695ms)
+✔ 案件費用：只有學校規定或預設單價時仍視為已登錄 (0.8114ms)
+✔ 案件費用紙本：規定與姓名會經遮蔽／跳脫後才寫入報告 (2.1205ms)
+✔ 案件費用紙本：長明細會預先分頁且每筆只出現一次 (2.3283ms)
+✔ 案件費用儲存維持案件根層 raw_json 相容路徑並觸發存檔 (0.3878ms)
+✔ 案件費用模組已接入桌面入口與模組清單 (2.1881ms)
+✔ moeReview 通過 → derivedCaseSummary 同步 c.status / closedAt / archiveDueAt (43.3946ms)
+✔ moeReview 從通過改回未通過 → derivedCaseSummary 回到「待審查」並清空 closedAt / archiveDueAt (13.7544ms)
+✔ moeReview 改回未通過後再改回通過 → 再次自動寫入 (13.5754ms)
+✔ statusManualOverride=true 時仍不得掩蓋後續程序重新變成未完成 (20.043ms)
+✔ derivedCaseSummary(c) 不修改 c 物件，僅回傳推導結果 (10.2581ms)
+✔ derivedCaseSummary 對 reportToMOE 已回報但 moeReview 未通過 → 回「待審查」 (9.6744ms)
+✔ derivedCaseSummary 對缺少程序的手動結案 → 不回已結案 (11.0201ms)
+✔ B9: normalizeCase 對 report24 已回報的案件強制 report24Status=done (15.0238ms)
+✔ 摘要標籤必須分成三個層級，不得全部同一種份量 (5.1207ms)
+✔ 只有需要行動的狀態可以填底色 (2.2474ms)
+✔ render 必須替每個摘要標籤指定層級 (0.4535ms)
+✔ 過長的屬性標記必須截斷而不是把整列撐開 (0.4747ms)
+✔ 分頁的計數欄位只能放短計數，長狀態改放 title (0.6983ms)
+✔ 分頁列必須等分對齊，不得依文字長度各自決定寬度 (0.9308ms)
+✔ 沒有適用檢核項目時必須說明原因，不得留白 (0.3197ms)
+✔ 案件卡片不得出現沒有標題的破折號 (0.1601ms)
+✔ 案件卡片不得在同一張卡片顯示兩次下個期限 (0.1672ms)
+✔ actions.call click 分支對 checkbox/radio 跳過 preventDefault (0.9139ms)
+✔ ui.call click 分支同樣對 checkbox/radio 跳過 preventDefault (0.1462ms)
+✔ daily-work.call click 分支同樣對 checkbox/radio 跳過 preventDefault (0.1368ms)
+✔ handleChange 仍會把 daily-work.call 路由到 dailyWorkMethod (0.2688ms)
+✔ handleChange 仍會把 actions.call 路由到 callActionsMethod (0.1821ms)
+✔ end-to-end：click checkbox[data-action="actions.call"] 後 checked 翻面、change 觸發 callActionsMethod 一次 (0.1798ms)
+✔ case workspace tabs use legal procedure, chronicle, and complete timeline names (2.2373ms)
+✔ chronicle records normalize as non-procedure event history (12.9939ms)
+✔ chronicle report redacts names and does not expose investigation assessment fields (5.7012ms)
+✔ chronicle templates are event-history oriented, not evidence or witness templates (4.3225ms)
+✔ chronicle UI removes substantive investigation controls (6.7285ms)
+✔ chronicle filters and grouping are limited to event-history needs (0.7661ms)
+✔ chronicle timelines can be built backward for pre-known context (22.1983ms)
+✔ complete timeline combines legal procedure nodes, deadlines, and chronicle history (10.7531ms)
+✔ chronicle date precision UI is wired (2.0804ms)
+✔ chronicle insert point chooses a legal procedure timeline anchor (2.0193ms)
+✔ chronicle insert sort key places report insertion before or after anchored legal node (4.603ms)
+✔ #46 GitHub Actions workflow runs the shared checks and Rust tests (2.0259ms)
+✔ backup-actions.js 含 cleanupOrphanAttachments action (1.0919ms)
+✔ cleanupOrphanAttachments 兩段式：先 scan(false) 後 confirm 再 delete(true) (1.1844ms)
+✔ cleanupOrphanAttachments 必須先檢查 Tauri runtime 可用 (0.3616ms)
+✔ cleanupOrphanAttachments confirm 為 danger + requireAck（不可復原動作的一致政策） (0.2452ms)
+✔ index.html 備份中心 modal 含「掃描孤兒附件原檔」按鈕 (0.5838ms)
+✔ tauri-contract.js 含 cleanup_orphan_attachments 命令與 cleanupOrphans adapter (0.2199ms)
+✔ GUARD-006 FAIL-1：Rust 不得保留固定等待後強制關閉 (0.8879ms)
+✔ GUARD-006 FAIL-1：收到關閉要求後等待完整持久化協調器成功才確認關閉 (1.4698ms)
+✔ GUARD-006 FAIL-1：任一資料寫入失敗時取消關閉並保留視窗 (1.1236ms)
+✔ GUARD-006 FAIL-1：reference 寫入失敗時取消關閉並保留視窗 (0.85ms)
+✔ GUARD-006 FAIL-1：等待逾時只能取消關閉，不得視為儲存成功 (7.6886ms)
+✔ GUARD-006 FAIL-1：沒有 Tauri 事件介面時不註冊也不報錯 (0.7947ms)
+✔ 性平會檢舉與公益檢舉都先建立案件申請書收件及後續程序節點 (33.8989ms)
+✔ 性平會主動啟動調查於性平會決議受理後建立調查階段節點 (11.0625ms)
+✔ 一般檢舉案仍須等書面通知受理，不會只憑移交決議啟動調查 (9.5084ms)
+✔ committee member model supports term cohorts and student committee identity (5.8181ms)
+✔ committee meetings save selected term and attendee term snapshot (0.8944ms)
+✔ case and expert snapshots are preserved when master data is used in cases (2.0972ms)
+✔ packaged business data avoids browser-only storage for new module content (1.5762ms)
+✔ 包摘要列出來源、建立時間、base revision 與範圍 (3.0564ms)
+✔ 新案件歸入 added (0.2623ms)
+✔ 管理欄位變更歸入 modified，並列出逐欄前後值 (0.8258ms)
+✔ 沒有變更的案件不列入任何分組 (0.2219ms)
+✔ 主工作區已另行修改時判定為衝突，且不自動猜勝方 (0.2867ms)
+✔ 有衝突時不得提交，並說明原因 (0.2735ms)
+✔ 預檢未通過時不得提交 (0.1544ms)
+✔ 無衝突且預檢通過才可提交 (0.1848ms)
+✔ 缺 provenance 的刪除歸入 noProvenance，不進 deleted (0.1804ms)
+✔ 附 base hash 的刪除才進 deleted (0.2467ms)
+✔ 附件變更獨立分組，不混進管理欄位差異 (0.1781ms)
+✔ 只比對管理欄位，本機欄位不出現在差異中 (0.1716ms)
+✔ 提交摘要必須帶 transaction ID，失敗時說明工作區維持原狀 (0.2553ms)
+✔ 差異計算是純讀取 (0.1525ms)
+✔ V2-PKG-001：承辦人彙整包含管理快照、變更、獨立序號與可驗證雜湊 (20.2858ms)
+✔ CONSOL-201：刪除逐筆攜帶上一版雜湊，缺少或多餘宣告一律拒絕 (2.7306ms)
+✔ GUARD-006 FAIL-7：資料包只保留主秘管理資料，敏感內容與未知欄位一律排除或拒收 (12.0774ms)
+✔ V2-PKG-002：完整快照中的共用資料與模板治理資料都納入雜湊及合併，不得靜默遺漏 (17.465ms)
+✔ V2-SEQ-001：來源序列不受檔案選取順序影響，辨識重複、缺版與分叉 (14.1924ms)
+✔ V2-STAGE-001：多包預檢驗學校與雜湊，失敗不修改輸入或工作區 (17.0054ms)
+✔ V2-MERGE-001：主秘修改與來源新版形成衝突，明確決定後才產生可套用方案 (9.9101ms)
+✔ V2-MERGE-002：主秘保留現況後，來源未再變更不得於下一包靜默覆蓋 (20.9638ms)
+✔ V2-MERGE-003：主秘既有但無來源追溯的同 ID 資料不得首次匯入時被靜默覆蓋 (2.3012ms)
+✔ CONSOL-201：無 provenance 或刪除基準不符時保留主資料，只有同來源同基準可刪除 (8.9722ms)
+✔ V2-PROJ-001：共同領域分支可合併，評估透明指出缺來源、依賴與里程碑日期矛盾 (2.0909ms)
+✔ V2-PROJ-002：待套用方案中的共同專案若有斷裂依賴，評估結果必須真正阻止提交 (10.8723ms)
+✔ PERSIST-204：統整專案批次寫入失敗時回復記憶體 pre-image (0.821ms)
+✔ PERSIST-204：承辦包帳本批次寫入失敗時回復來源序列與 ledger (12.1753ms)
+✔ V2-COMMIT-001：提交完成後建立合併工作階段並推進來源帳本 (0.8007ms)
+✔ V2-UI-001：正式桌面版提供三區主秘統整入口、多包匯入與 A4 報告 (531.6144ms)
+✔ SQLite-only startup no longer parses or downloads a corrupt browser-state copy (0.8068ms)
+✔ SQLite load failures are handled by the repository write lock instead of a browser safe mode (2.6545ms)
+✔ 預設模板成形且各欄位有明確預設值 (0.9823ms)
+✔ normalize 擋掉不合法的計價方式與負數單價 (0.2711ms)
+✔ 全部單價為 0 時視為尚未設定，不要帶入一堆 0 元項目 (0.2077ms)
+✔ 出席費＝單價 × 次數 × 人數，校內外分開計算 (0.2671ms)
+✔ 改為每小時計價時，數量的意義與標籤都要跟著變 (0.1682ms)
+✔ 出席費提供校內外拆分明細，不只給一個總數 (0.7221ms)
+✔ 人數為 0 或負數時該側金額為 0，不得變成負數 (0.1566ms)
+✔ 撰稿費預設不足千字以千字計 (0.2098ms)
+✔ 改為按實際字數比例時金額不同——這是各校規定，不可寫死 (0.3915ms)
+✔ 超過上限時以上限計，且明確回報已觸頂 (0.2786ms)
+✔ 上限為 0 代表不設限，不得被當成「上限 0 元」 (0.179ms)
+✔ 字數為 0 或負數時金額為 0 (0.1735ms)
+✔ 人數取自案件的調查委員名單，同一人不重複計算 (0.2352ms)
+✔ 未填來源者一律算校外 (0.1008ms)
+✔ 沒有委員或沒有事件時回傳 0，不得拋錯 (0.1139ms)
+✔ 沒有姓名的委員不計入——無法辨識就無法確認是不是同一人 (0.0908ms)
+✔ 調查報告是撰稿費不是出席費 (0.2385ms)
+✔ 新增雜支類別，車馬費與餐飲費有地方登錄 (0.0925ms)
+✔ 類別清單是單一來源，不再逐處硬寫 (0.0885ms)
+✔ 費率模板存在設定，不是逐案輸入 (0.4212ms)
+✔ 模板面板涵蓋使用者要求的每一項設定 (0.2033ms)
+✔ 自動試算的出席人數取自調查委員名單 (0.0803ms)
+✔ 撰稿費觸頂時以整筆金額登錄，避免單價乘數量對不上實付 (0.127ms)
+✔ 模板未設定時不顯示自動試算，避免帶入一堆 0 元項目 (0.0693ms)
+✔ CSP meta tag 內 script-src 不含 unsafe-inline (0.9757ms)
+✔ index.html 不含 inline <script>（只允許外部 src） (1.5578ms)
+✔ index.html 不含 inline event handler attribute (4.2567ms)
+✔ js/ui/diag-bootstrap.js 存在並提供 window._diag (0.6149ms)
+✔ js/ui/diag-bootstrap.js 處理 data-chashao-logo 兩種 onerror 模式 (0.3793ms)
+✔ index.html 載入 js/ui/diag-bootstrap.js（必須在第一個 <script>） (0.3669ms)
+✔ prepare-tauri-dist.mjs 取用的桌面 CSP 來自 tauri.conf.json 且 script-src 不含 unsafe-inline (1.8915ms)
+✔ src-tauri/tauri.conf.json security.csp 的 script-src 不含 unsafe-inline (0.4519ms)
+✔ 桌面與 HTML 的 script-src 僅允許本機腳本及 WebAssembly (2.2612ms)
+✔ daily-work _collectItems 納入未被任何學期涵蓋的案件最緊急期限 (4.1023ms)
+✔ quarterly 不適任人員 模板存在且 cadence=quarterly (6.5773ms)
+✔ 舊版四筆不適任人員模板已被移除 (2.1893ms)
+✔ suggestedDueListForTemplate 對 quarterly 模板展開為多筆，落在學期內的月份 (3.9316ms)
+✔ suggestedDueListForTemplate 對非 quarterly 模板回傳長度 1 的陣列（維持原行為） (2.2602ms)
+✔ normalizeDailyTask 接受 reportAtMeetingTaskId 欄位 (11.5571ms)
+✔ normalizeDailyTask 對 kind=committee 的任務強制清空 reportAtMeetingTaskId（避免自我引用） (4.1562ms)
+✔ DailyWork.committeeMeetingsOfSemester 僅回傳同學期且為 committee 的任務，依會議次別排序 (17.9504ms)
+✔ DailyWork.semesterNeedsCommitteeMeeting 在學期無會議任務時回傳 true (4.7907ms)
+✔ DailyWork.committeeMeetingShortLabel 依 meetingNo 產生「第 N 次性平會」 (2.6365ms)
+✔ P1-2：刪除學期假日後，該日期從 HolidayManager 集合退出（不殘留影響案件期限） (12.7822ms)
+✔ P1-2：刪除整個學期後，其假日也退出集合 (4.5451ms)
+✔ P1-3：_createTasksFromPhases 對同 templateId+到期日去重，重跑全部略過 (20.4532ms)
+✔ P1-3：同次執行內，同模板落在多個勾選階段也只建一次 (8.2917ms)
+✔ P1-1：儲存委員會議時凍結出席快照（姓名/性別/類型/總委員數） (5.0031ms)
+✔ P1-1：事後改委員性別或刪委員，已存會議的快照統計不被回溯改寫 (4.5556ms)
+✔ P1-1：computeStatsFromSnapshot 對舊資料 fallback 即時委員，委員已刪則略過 (5.3447ms)
+✔ D-9：委員庫可從上一屆在任名單建立新屆草稿 (4.4919ms)
+✔ P2-1：normalizeDailyTask 對 n/a 清空完成日並保留理由；非 n/a 清空理由 (4.7704ms)
+✔ P2-1：saveTaskFromModal 對空白免辦理由阻擋儲存 (2.1662ms)
+✔ P2-2：報告達成率分母排除免辦、未到期不計失敗、逾期單列 (7.3788ms)
+✔ P2-4：刪除性平會議任務時，解除其他任務的 reportAtMeetingTaskId (5.0279ms)
+✔ P2-3：_cloneTasksFromSemester 複製骨架、重置狀態/期限/檢核，並對既有去重 (4.8862ms)
+✔ P3-1：報告模板開啟去識別時，案件章節遮蔽編號與來源、保留類型 (4.6505ms)
+✔ P3-4：頻率不足時報告顯示提示 (4.9596ms)
+✔ P3-4：頻率足夠時不顯示不足提示 (4.2371ms)
+✔ P3-3：selectRecentAcademicYear 選最近兩個非假期學期 (4.7096ms)
+✔ DATA-200：_buildMeetingDraft 只建立草稿並依同視窗草稿遞增會議次別 (4.4037ms)
+✔ D-12 CM-A：任期已過的委員，list() 讀取時即排除（不因儲存時狀態漂移） (4.0915ms)
+✔ DATA-203：任期尚未開始的委員不得提前列入在任清單 (4.8266ms)
+✔ D-12 CM-B：未來任期仍可標記提前卸任或取消在任 (4.148ms)
+✔ D-12：normalize 不以任期覆寫 isActive（存手動意圖）並保存 resignedAt (4.3115ms)
+✔ D-13：追蹤中且到期日落在學期區間的通報追蹤，進入 _collectItems(type:tracking) (4.6889ms)
+✔ EP-C：normalizeExpert 可用狀態預設 available、限定合法值 (5.9124ms)
+✔ D-11 dry-run：_previewTasksFromPhases 列出將建立任務與略過重複（不寫入） (6.311ms)
+✔ D-11 search：_collectItems 依 _searchQuery 過濾任務 (4.3436ms)
+✔ 任務列：未完成任務顯示「完成」按鈕（openTaskCompleteModal），已完成則不顯示 (4.3694ms)
+✔ RT-C：多次讀取通報追蹤後，State.data.reportTrackings 陣列參考穩定 (4.1307ms)
+✔ D-10：expertSnapshotDiff 列出快照與人才庫現況的差異欄位 (4.7411ms)
+✔ D-9：committeeSnapshotDiff 列出屆期/成員/女性比例差異 (4.1204ms)
+✔ daily work templates expose versioned metadata and review boundary (4.6855ms)
+✔ custom task templates preserve source version and review fields (2.1514ms)
+✔ tasks preserve template source snapshot and suggested docs (5.4134ms)
+✔ template manager UI and import/export copy include metadata fields (2.5392ms)
+✔ 深色模式的文字色必須接近中性，不得是高彩度色 (1.8101ms)
+✔ theme 不變式的奶油色同樣不得高彩度 (0.1548ms)
+✔ 深色模式的表面色只能帶淡淡暖調，不得整片染色 (0.2041ms)
+✔ 深色模式所有語意色與文字色都必須通過 WCAG AA (0.3935ms)
+✔ 深色模式仍須保留可辨識的暖調，不得變成純灰 (0.1664ms)
+✔ 「＋ 建立案件」不得與案件卡片黏在一起或長得一樣 (0.3642ms)
+✔ DATA-204：結案案件的所有子資料 Repository 在沒有修訂憑證時拒絕且不改資料 (32.9466ms)
+✔ DATA-204：共用憑證允許跨 Repository 提交，且只建立一筆含前後差異的稽核紀錄 (16.7756ms)
+✔ DATA-204：批次取代已結案案件也會使用同一憑證保存差異 (27.66ms)
+✔ DATA-204：系統校正必須保存固定 reason code 與技術來源 (13.8806ms)
+✔ DATA-204：更新 payload 移除結案欄位也不能繞過既有案件狀態 (15.8544ms)
+✔ DATA-205：已完成會議再編輯其他欄位時，姓名相同但 ID 不同也不覆寫歷史快照 (14.5882ms)
+✔ DATA-205：只有明確 refresh 選項會重建完成會議快照並留下稽核 (1.676ms)
+✔ DATA-205：年度完成度跨年度共用單一分母，pending 與撤案例外原因分開列示 (2.3479ms)
+✔ 每種問題的處理方式由固定政策決定，呼叫端不能指定 (1.0489ms)
+✔ 未知問題類型歸為無法確認，不得預設可自動修復 (0.2308ms)
+✔ 無法確認不算健康 (0.2096ms)
+✔ 完全沒有問題才算健康 (0.1317ms)
+✔ 附件相關問題必須先備份再處理 (0.2087ms)
+✔ 每項都帶位置、影響與建議動作 (0.8236ms)
+✔ 修復計畫列出會改什麼、也列出不會動什麼 (0.2987ms)
+✔ 沒有可自動修復項目時明確說明，不提供空的執行按鈕 (0.1458ms)
+✔ 修復交易失敗時必須視為完全回復 (0.2153ms)
+✔ 修復後未重新掃描或未留稽核紀錄都不算成功 (0.5601ms)
+✔ 修復、重新掃描與稽核都完成才算成功 (0.1601ms)
+✔ 修復後仍有殘留問題時要如實回報數量 (0.117ms)
+✔ collectDataHealth reports missing stored attachments, external references, backup age, and cloud path signals (96.9999ms)
+✔ collectDataHealth does not treat verification errors or hash mismatches as healthy files (30.5362ms)
+✔ renderBackupCoverageAdvice explains JSON, migration package, and external attachment coverage (20.5217ms)
+✔ collectDataHealth reports daily work data risks (35.3684ms)
+✔ 資料健康檢查列出跨集合孤兒引用但不修改原資料 (19.2601ms)
+✔ collectDataHealth reports committee meeting risks (34.1612ms)
+✔ collectDataHealth uses saved committee meeting snapshots for historical stats (22.9979ms)
+✔ collectDataHealth reports case data consistency risks (20.1574ms)
+✔ collectDataHealth reports chronicle person, codebook, and attachment risks (24.1544ms)
+✔ collectDataHealth reports raw_json parse issues preserved from SQLite (23.1991ms)
+✔ buildDailyWorkIssueCsv exports overdue, orphan semester, and expired member rows (22.1745ms)
+✔ buildCaseDataIssueCsv exports case consistency rows (28.9668ms)
+✔ buildAttachmentIssueCsv exports missing and external attachment rows (27.0672ms)
+✔ T1: renderDataHealthStatus escapes malicious imported labels in HTML output (20.2285ms)
+✔ T1: CSV exports neutralize spreadsheet formula injection and quote HTML payloads (17.0752ms)
+✔ GUARD-006 FAIL-1：設定寫入持續失敗時 flushSettings 必須拒絕 (2.392ms)
+✔ GUARD-006 FAIL-1：先前失敗的設定可在關閉確認時重試成功 (1.6961ms)
+✔ B3-A：open 時設定 max-height 並有以 innerHeight 為界的翻轉條件 (0.8645ms)
+✔ B3-B：時間 wheel 點擊後呼叫 liveSyncTime 寫回 input (0.254ms)
+✔ B3-C：outsideClick 對 dirty popup 走 commit；否則 close (0.2434ms)
+✔ Esc 仍走 close()（取消語意），不呼叫 commit (0.1855ms)
+✔ initial 狀態被記錄供 isDirty 比對 (0.1455ms)
+✔ require() 直接拿到 DateUtil 物件（不必走 vm.runInContext） (0.739ms)
+✔ require 後 parseLocal / key 行為與 vm 版本一致 (1.053ms)
+✔ addMonthsClamped 同 vm 版本行為 (0.231ms)
+✔ monthPeriodEnd 經 require 可用且套用§48 但書 (0.1865ms)
+✔ HOLIDAYS 未注入時 isHoliday 只看週末（fallback） (0.1758ms)
+✔ HOLIDAYS 注入後 isHoliday 正常識別 (0.1601ms)
+✔ parseLocal parses date-only values at local midnight (1.7818ms)
+✔ parseLocal 拒絕不存在日期、非法時間與帶時區字串 (1.0557ms)
+✔ parseLocal 保留合法的秒與毫秒，fmtTime 對壞值回傳空字串 (0.2969ms)
+✔ combine preserves datetime strings and fills missing time (0.2641ms)
+✔ addMonthsClamped keeps end-of-month dates valid (0.2116ms)
+✔ monthPeriodEnd 取相當日前一日（一般情形） (0.2178ms)
+✔ monthPeriodEnd 無相當日取該月末日（行政程序法§48 III／民法§121 II） (0.149ms)
+✔ computePeriodDue 月期間套用§48 但書（知悉 1/30 → 一個月末日 2/28） (0.2527ms)
+✔ 日與月期間到末日終了才屆滿，24 小時規則仍保留精確時間 (0.2249ms)
+✔ postpone moves weekends and configured holidays to next workday (0.2641ms)
+✔ businessDays 只計工作日，排除週末與設定假日 (0.1947ms)
+✔ diffDays compares dates without time-of-day noise (0.1453ms)
+✔ 日期方法脫離 DateUtil 物件傳遞時仍可正常使用 (0.1843ms)
+✔ require() 直接拿到 Deadline 物件 (0.7525ms)
+✔ dueForRule 在最小注入下能算出 days rule 結果 (1.5387ms)
+✔ caseStatus 在無 trigger event 時回傳 done (9.266ms)
+✔ Deadline cache key 納入 holiday revision，假日變動後不沿用舊結果 (1.7798ms)
+✔ classifyDays 邊界（dueSoonDays=14） (0.8238ms)
+✔ classifyHours 邊界（urgentHours=6） (0.1627ms)
+✔ 分桶為純函式：不依賴 TODAY/RULES，僅輸入決定輸出 (0.1197ms)
+✔ 缺起算事件時明確回報無法計算，不得回傳空步驟卻宣稱可用 (1.1012ms)
+✔ 說明步驟涵蓋起算、期間與順延，且最終日期與步驟同源 (0.8635ms)
+✔ 起算欄位來源會被明確標示，fallback 也要說清楚 (1.0409ms)
+✔ 有展延時必須列為獨立步驟並顯示合計天數 (0.3045ms)
+✔ 假日順延與否都要明確說明，不能只在順延時才出現 (0.2441ms)
+✔ 試算會反映假設值，並與正式值並排比較 (0.3853ms)
+✔ 試算結果相同時明確標示未變動 (0.2912ms)
+✔ 試算 100 次後正式案件資料完全不變 (3.2887ms)
+✔ overrides 只接受明確列出的欄位，不得任意改寫複本 (0.2786ms)
+✔ 試算不存在的事件 id 不會拋錯，也不會改到別的節點 (0.2646ms)
+✔ B1-a：original 為工作日時，延 1 月不應多算 1 天 (43.6284ms)
+✔ B1-b：original 落週末時，延 1 月應以順延後工作日起算 (18.8309ms)
+✔ B1-c：連續延長 2 次，每次以前次順延後迄日重新起算 (10.8103ms)
+✔ B1-d：addDays 單位的延長不受 B1 邏輯影響 (11.2387ms)
+✔ B1-e：既有「2026-03-02 受理 + 兩次延長 → 7-02」測試行為保留 (13.6713ms)
+✔ B1-f：hours rule 完全不適用 postpone / -1 day 邏輯 (10.0602ms)
+✔ 知悉時間為下午 18:00 時，24 小時期限為隔日 18:00（不被截斷） (19.1098ms)
+✔ 知悉時間為晚上 23:30 時，24 小時期限跨日到隔日 23:30 (9.9138ms)
+✔ 知悉時間早上 08:00 時，24 小時期限不會早於隔日早上 (9.155ms)
+✔ Deadline.status 對 hours 規則顯示「剩 N 小時 M 分」時計算正確 (9.5748ms)
+✔ Deadline.status 對已過期的 hours 規則顯示「已逾期 N 小時 M 分」 (13.9188ms)
+✔ reportSocial24 規則同樣支援小時粒度（需通報案件） (8.896ms)
+✔ reportSocial24 對「無通報義務」案件不計逾期（#2 修正） (12.2332ms)
+✔ addExtension 在 touch() 前顯式呼叫 Deadline.invalidate(c) (1.1556ms)
+✔ undoExtension 在 touch() 前顯式呼叫 Deadline.invalidate(c) (0.2275ms)
+✔ addSpecialExtension 在 touch() 前顯式呼叫 Deadline.invalidate(c) (0.1829ms)
+✔ undoSpecialExtension 在 touch() 前顯式呼叫 Deadline.invalidate(c) (1.0087ms)
+✔ Deadline.invalidate 在 deadline.js 內存在且為 idempotent (2.3615ms)
+✔ perPartyBreakdown 對單一送達回空陣列（無需展開） (55.4059ms)
+✔ perPartyBreakdown 對兩筆送達回正確的 per-party 期限 (13.5362ms)
+✔ perPartyBreakdown 對非 triggerDateField 的 rule 回空 (10.735ms)
+✔ perPartyBreakdown 對 trigger 不存在的 rule 回空 (10.8512ms)
+✔ case-level aggregate (max) 與 per-party 一致：max 應等於最晚送達的 final (24.1006ms)
+✔ rejectAppeal20（不受理通知）也適用 per-party 展開（B-4 改送達日基準） (11.7875ms)
+✔ report-actions _deadlinesBody renders per-party 子列 (0.5402ms)
+✔ 內建法定死線保留一個月、二加一加一及七個工作日 (21.1115ms)
+✔ 修改法定死線必須同時填寫原因與確認依據 (14.2746ms)
+✔ 校內時程不得晚於法定死線 (54.6505ms)
+✔ 期限狀態同時保留法定死線與較早的校內目標 (53.0826ms)
+✔ 法定覆寫會立即改變期限，並保留覆寫標示 (13.093ms)
+✔ 執行期仍會把異常校內日期限制在法定死線 (12.6543ms)
+✔ 期限設定介面、SQLite key 與啟動載入路徑存在 (8.1593ms)
+✔ 24-hour report deadline is calculated from known event time without holiday postponement (35.8838ms)
+✔ 3-day transfer deadline starts next day without postponing the start day (B-2 conservative) (10.9314ms)
+✔ 3-day transfer completed on the deadline afternoon is not overdue (9.771ms)
+✔ 3-day transfer completed after the deadline date remains overdue (15.8401ms)
+✔ 20-day notice deadline postpones final day when it lands on a holiday (9.6634ms)
+✔ investigation deadline supports two one-month extensions (9.5056ms)
+✔ special investigation extension marks overdue status without changing 2+1+1 final date (9.4637ms)
+✔ appeal deadline uses latest delivery date when delivery records exist (9.014ms)
+✔ appeal deadlines do not appear before their prerequisite events (10.5287ms)
+✔ rejectAppeal20 appears only when noticeAccepted is rejected (9.5338ms)
+✔ transferNotify30 appears before notification and completes by transferNotifiedAt (8.8585ms)
+✔ 每個 DECISION_VALUE_ALIASES 目標 value 都存在於該 kind 的 DECISION_OPTIONS (4.4662ms)
+✔ 每個 DECISION_OPTIONS 的 kind 至少含空值選項，且 value 不重複 (12.1278ms)
+✔ 刪除案件的預覽列出子紀錄與附件，且說得出是哪些 (2.752ms)
+✔ 刪除事件的預覽會列出引用該附件的大事紀 (0.3583ms)
+✔ 目標不存在時明確回報，不假裝有影響 (0.1407ms)
+✔ 預覽是純讀取，不得改動來源資料 (0.161ms)
+✔ payload 損壞時不得還原 (0.3137ms)
+✔ 父層案件不存在時不得還原子紀錄 (4.138ms)
+✔ ID 衝突時不得自動改號，必須標為需人工處理 (0.8131ms)
+✔ 附件原檔遺失時不得還原，並列出缺哪幾個 (0.2642ms)
+✔ 多項問題同時存在時全部列出，不只回報第一項 (0.4465ms)
+✔ 條件齊備時可還原 (0.2312ms)
+✔ 還原案件本身不需要父層 (0.1495ms)
+✔ 回收區依刪除時間新到舊排序，並標示是否逾期與有無 payload (14.0488ms)
+✔ 回收區可依類型與案件篩選 (0.337ms)
+✔ 過期判斷不做背景排程，只在被呼叫時計算 (0.8258ms)
+✔ delivery region and method options are defined for all service scenarios (10.4192ms)
+✔ delivery form captures region, method, public notice, and evidence notes (5.8166ms)
+✔ delivery metadata is preserved in reports and Tauri storage (1.4333ms)
+✔ _buildFullCaseReportPages 對 delivery 略過案件資訊區塊 (7.9206ms)
+✔ delivery hub separates node PDF, template PDF, and case archive ZIP (4.8441ms)
+✔ delivery template panel has preflight preview and attachment inclusion control (2.1292ms)
+✔ delivery ZIP writes self-contained manifests and external index lists (0.149ms)
+✔ case archive is a single whole-case ZIP package (4.4167ms)
+✔ delivery output location is a shared picker-backed setting (12.4171ms)
+✔ desktop case archive uses native archive command without Blob download fallback (1.1615ms)
+PDF 內嵌渲染失敗： Error: read failed
+    at f.actions._openPdfDocumentForAttachment (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\delivery-report-lifecycle.test.js:173:11)
+    at evalmachine.<anonymous>:938:38
+    at Object._runDeliveryReport (evalmachine.<anonymous>:339:20)
+    at Object.nodeExportDownloadReport (evalmachine.<anonymous>:876:25)
+    at TestContext.<anonymous> (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\delivery-report-lifecycle.test.js:175:19)
+    at Test.runInAsyncScope (node:async_hooks:214:14)
+    at Test.run (node:internal/test_runner/test:1106:25)
+    at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    at Test.postRun (node:internal/test_runner/test:1235:19)
+    at Test.run (node:internal/test_runner/test:1163:12)
+✔ 交付報告取消後不列印，只釋放本次圖片並恢復操作 (7.8683ms)
+✔ 產生失敗也清理本次圖片並保留原始錯誤 (2.0062ms)
+✔ 跨入口重複執行不開啟第二個產生工作 (1.4602ms)
+✔ 等待附件時切換工作區，停止列印並清理圖片 (1.2607ms)
+✔ 報告內容、檔名與附件數量使用開始時的快照 (2.3191ms)
+✔ 舊批次完整報告按鈕使用相同交付流程 (0.7851ms)
+✔ 模板取消停止剩餘版本，紀錄只列已完成的 0 個版本 (1.0086ms)
+✔ 模板取消停止剩餘版本，紀錄只列已完成的 1 個版本 (0.8396ms)
+✔ 階段報告附件讀取失敗時清冊不宣稱已內嵌 (2.7182ms)
+✔ 階段報告取消傳至 PDF，不吞掉取消後繼續列印 (0.9858ms)
+✔ 所有 subset fakeCase 交付報告皆以 kind:delivery 產出（不算案件資訊期限） (0.9967ms)
+✔ D2: 內建 4 模板存在且 id 為 builtin-* 前綴 (9.3856ms)
+✔ D2: 內建模板的 nodeKinds 必須是 EVENT_KINDS 內有效 id (5.6707ms)
+✔ D2: 存檔模板 nodeKinds 為空陣列（代表全部節點） (5.6228ms)
+✔ D2: 報部模板 output=separate（每節點獨立子資料夾） (7.727ms)
+✔ D2: 第一次性平會模板 version=redacted (8.8867ms)
+✔ D2: validateNodeKinds 拒絕無效 EVENT_KIND id (9.8813ms)
+✔ D2: saveUser 新增使用者模板並可被 find 找回 (7.5951ms)
+✔ D2: saveUser 對重複 id 走更新而非新增 (4.2458ms)
+✔ D2: saveUser 拒絕無名稱或無效 nodeKinds (7.7548ms)
+✔ D2: removeUser 只刪 user-*，拒絕 builtin-* (8.5929ms)
+✔ D2: saveBuiltinOverride 修改內建 nodeKinds 並 listAll 反映變更 (4.3092ms)
+✔ D2: saveBuiltinOverride 拒絕 user-* 與未知 id (4.3032ms)
+✔ D2: listAll 同時包含內建（含覆寫後）與使用者模板，順序為 builtin first (7.5283ms)
+✔ D2: normalize 對 version/output 異常值回退預設 (4.3735ms)
+✔ D2+: 內建模板覆寫可同時修改版本與節點 (4.4172ms)
+✔ D2+: 交付模板設定可匯出並在另一個環境匯入 (11.4459ms)
+✔ D3: 交付模板設定只保存到 workspace reference scope (3.8913ms)
+✔ D2: index.html 與 module-manifest 已登記 delivery-templates (2.1337ms)
+✔ D3: pickAttachmentsForEvent 原版只選非塗黑版 stored 附件 (10.6968ms)
+✔ D3: pickAttachmentsForEvent 塗黑版每原檔配對對應塗黑版附件 (1.4218ms)
+✔ D3: scanRedactionGaps 跨多節點蒐集所有缺漏 (2.9471ms)
+✔ D3: scanRedactionGaps 全部有塗黑版時回空陣列 (1.3311ms)
+✔ D3: RedactionMissingError 含 missingRedactions 屬性 (1.3912ms)
+✔ D3: safeName 剔除路徑非法字元與多空白 (1.3403ms)
+✔ 0.3.21: delivery-pdf 已移除（死碼清除），delivery-zip 仍註冊且不再 requires delivery-pdf (2.5296ms)
+✔ 0.3.21: 已移除 fontkit / Noto Sans TC 之第三方授權登記（不再隨產品散布） (0.7068ms)
+✔ D4: eventsForTemplate 依 nodeKinds 選節點，空 nodeKinds 代表全節點 (2.0448ms)
+✔ D4: versionsForTemplate 支援 original / redacted / both (1.4754ms)
+✔ D4+: analyzeTemplateDelivery summarizes readiness before download (1.7739ms)
+✔ D5: packArchiveDelivery 產出單一整案封存 ZIP (4.8397ms)
+✔ 封存將無法讀取及外部附件列入缺件清冊，且不送出檔案內容 (2.0155ms)
+✔ A11Y-001：所有靜態 modal 由 showModal 補 dialog 標題、背景 inert、初始焦點與還焦 (16.5067ms)
+✔ A11Y-001：confirm 首次開啟也困焦並在結束後還焦 (0.2493ms)
+✔ A11Y-002：每個桌面 tab 都有 selected、roving tabindex、controls 與存在的 panel (3.5879ms)
+✔ A11Y-002：方向鍵與 Home/End 會移焦並自動啟用 roving tab (0.2839ms)
+✔ A11Y-003：儲存、長任務、錯誤與 toast 均有可讀狀態公告 (2.7759ms)
+✔ OUT-001：報告固定 A4、保留頁面邊界並讓長字串可換行 (0.8206ms)
+✔ OUT-001：黑白列印不以狀態色作唯一資訊 (0.2361ms)
+✔ OUT-001：高縮放 modal 固定 header/footer，只有內容區捲動 (2.7852ms)
+✔ OUT-001：列印流程不再誤稱直接下載 PDF (0.3155ms)
+✔ OUT-001：驗收矩陣涵蓋桌面尺寸、Windows 縮放、A4、黑白與待最終實機證據 (0.211ms)
+✔ STYLE-001：桌面元件密度與互動表面使用共用 tokens (8.8946ms)
+✔ STYLE-001：核心 modal 與狀態 badge 不再硬寫個別亮色表面 (6.8249ms)
+✔ STYLE-001：規則明確維持 Windows 桌面，不新增手機或平板 token (0.3646ms)
+✔ 正式版透過共用前端服務取得 Tauri 設備識別碼 (3.5312ms)
+✔ prepare-tauri-dist 由 tauri.conf.json 取得桌面 CSP，不得自行硬編 (0.8954ms)
+✔ tauri.conf.json 的 CSP 存在且 script-src 不含 unsafe-inline (0.2295ms)
+✔ index.html 的瀏覽器 CSP 與桌面 CSP 確實不同，改寫不是空轉 (0.3054ms)
+✔ prepare-tauri-dist 在找不到可改寫的 CSP meta 時必須失敗 (0.1261ms)
+✔ verify-tauri-dist 檢查 CSP 一致、模組完整、開發檔洩漏與逐位元組比對 (2.0554ms)
+✔ release 流程只從 tauri-dist 取得前端產物 (0.4174ms)
+✔ DOC_TYPES 程式實計與技術手冊宣稱數一致 (7.4179ms)
+✔ EVENT_KINDS 程式實計與技術手冊宣稱數一致 (7.5942ms)
+✔ EVENT_KINDS 中 autoOnly 節點數與技術手冊宣稱數一致 (3.7664ms)
+✔ RULES 起算日設計原則：對外送達類 vs 欄位日期類 vs 對內公文書類分組正確（B-4/B-5 修訂） (2.0893ms)
+✔ D-15：normalizeMap 只接受目前的 variants 形式 (7.94ms)
+✔ D-15：normalizeMap 保留 variants 形式並補齊缺漏 id/name (5.1837ms)
+✔ D-15：addVariant / getVariant / setVariant / removeVariant / hasAnyBody (3.6138ms)
+✔ D-15：內建 defaults 經 normalizeMap 後每節點至少一個版本 (5.1476ms)
+✔ DT-B：buildContext 由事件衍生調查小組/會議次別/送達/社政變數 (6.9102ms)
+✔ DT-B：availableVariables 含「調查與送達」群組與社政通報編號 (6.1413ms)
+✔ DT-C：variant 帶來源/審核 metadata 預設與更新 (3.2111ms)
+✔ DT-C：metadata 經 normalizeMap 來回保留 (1.1515ms)
+✔ 附件類型下拉合併會議紀錄，不再列節點前綴型會議文件 (1.1123ms)
+✔ 必要文件規則以實際程序節點表示語境，不再保留舊版受理中介節點 (5.2608ms)
+✔ 訪談時間表與調查人員迴避簽署紀錄為獨立必要文件 (5.0443ms)
+✔ 舊會議文件類型保留為 aliases 並可 canonicalize (0.9711ms)
+✔ 附件類型下拉合併通知與送達簽收證明，不再列節點前綴型通知文件 (0.2313ms)
+✔ 必要文件規則以節點表示通知效力，附件類型只用通用通知與送達證明 (6.0956ms)
+✔ 舊通知與送達文件類型保留為 aliases 並可 canonicalize (2.1717ms)
+✔ 附件下拉與檢核會正規化舊 docType (1.2113ms)
+✔ 自動猜測會議類附件時回傳通用會議紀錄 (0.9004ms)
+✔ 自動猜測訪談時間表與迴避類附件時回傳新文件類型 (0.2116ms)
+✔ 自動猜測通知與送達類附件時回傳通用類型 (0.2705ms)
+✔ manifest 宣告附件類型正規化 helper (0.1084ms)
+✔ DOC_TYPE_GROUPS 與 DOC_TYPES 為一一對應（不漏、不重、不混入未知型別） (7.8132ms)
+✔ 未知或缺漏的狀態一律視為草稿，不得當成已定稿 (4.4815ms)
+✔ 狀態只能依既定路徑推進 (1.187ms)
+✔ 已作廢是終局，不得再回到任何狀態 (0.4189ms)
+✔ 任一非終局狀態都可以作廢 (0.1701ms)
+✔ 轉換到相同狀態要明確拒絕，而不是靜默成功 (0.1839ms)
+✔ 草稿可直接修改，已定稿與已送出必須建立新版本 (0.3995ms)
+✔ 已作廢的文件不能編輯 (0.1585ms)
+✔ 版本鏈由最新往舊排列，且從任一版都能取得完整鏈 (1.4962ms)
+✔ 版本鏈遇到循環引用不會無限迴圈 (0.3608ms)
+✔ 列表 row 標示是否可直接編輯 (0.2964ms)
+✔ row 保留建立、定稿、送出時間與模板版本，供事後追溯 (0.3138ms)
+✔ 列表支援依狀態與節點篩選，counts 一律以全部計算 (28.5435ms)
+✔ 列表依建立時間新到舊排序 (0.2577ms)
+✔ V1-DOCX-001：產出真正 DOCX ZIP，包含 A4、樣式、表格、清單、頁首頁尾與頁碼 (67.0879ms)
+✔ V1-DOCX-002：工具產生的受控 DOCX 可通過相容性檢查並轉成草稿 (24.8012ms)
+✔ V1-SEC-001：DOCX 外連、巨集與路徑逸出會阻擋 (18.2003ms)
+✔ V1-DOCX-002：不支援的繪圖內容必須報告並要求保留原檔，不可靜默轉換 (9.5227ms)
+✔ delivery report, daily reports, and data health actions use delegated data-action handlers (21.384ms)
+✔ timeline attachment actions use delegated data-action handlers (1.2615ms)
+✔ timeline writes via replaceChildren/_nodesFromHtml, not raw innerHTML (1.3829ms)
+✔ person list actions use delegated data-action handlers (2.2803ms)
+✔ 通報追蹤：由實際按鈕開窗、儲存與重開本校紀錄 (993.1093ms)
+✔ 通報追蹤：他校選項經儲存重載仍保留，且新視窗清除上一筆輸入 (600.5513ms)
+✔ 通報追蹤：未設定本校時可開窗並顯示本校設定提示 (436.2581ms)
+✔ 通報一鍵開案保留明確選擇的他校範圍 (483.511ms)
+✔ E2E-1 建立案件：表單、事件、期限與重新載入一致 (541.2643ms)
+✔ E2E-2 將收件節點改回待辦：保留節點並停止兩條期限 (536.4332ms)
+✔ E2E-3 回報節點完成：期限完成日採節點實際日期 (553.8271ms)
+✔ E2E-4 結果通知送達：每位當事人的 30 日申復期限各自保留 (511.3247ms)
+✔ E2E-5 結案與封存：狀態、提醒日及結案後修改紀錄完整往返 (978.7194ms)
+✔ DATA-200 案件編輯在檢核失敗或確認取消時不污染正式 State (458.1542ms)
+✔ DATA-200 簡化程序的確認取消只捨棄操作草稿 (498.393ms)
+✔ 審查回歸：試用建案完成寫入後才登記額度，刪案不被待寫快照復活 (436.7949ms)
+✔ 審查回歸：工作區重載失敗後拒絕舊案寫入，重試成功才解除 (540.0106ms)
+✔ 審查回歸：取消最後一筆寫入後可排空，救援匯出不要求資料庫成功 (331.0719ms)
+✔ 審查回歸：基本資料儲存保留知悉與校安通報的既有說明 (290.7982ms)
+✔ 審查回歸：送達日期更正會更新期限，保留人工文字；重為決定可填逐人送達 (393.1753ms)
+✔ 審查回歸：ISO 時間可顯示，業務日期解析仍拒絕時區與無效日期 (276.4025ms)
+✔ 審查回歸：未到期的小時期限不算逾期，延長時數不當日數 (247.8154ms)
+✔ 審查回歸：全案與階段報告的檔名、標題、附件及時間軸皆遮蔽 (288.2127ms)
+✔ 審查回歸：刪除學期後任務仍可從清單開啟與重新歸屬 (321.0154ms)
+✔ 審查回歸：訪談零間隔保留，跨午夜正確增加日期 (199.1956ms)
+✔ 審查回歸：試用案件首次寫入失敗後重試，仍須完成額度登記 (259.5089ms)
+✔ 審查回歸：工作區切換等待刪除完成，刪除失敗仍可重試 (284.7051ms)
+✔ 審查回歸：單案寫入不能將其他尚未儲存案件放進啟動快照 (264.0375ms)
+✔ 審查回歸：從其他案件畫面補回附件，仍儲存至原案件與原事件 (258.4237ms)
+✔ 審查回歸：案件切換同步更新選取狀態，保留可用鍵盤操作的按鈕 (347.1329ms)
+✔ 審查回歸：簡化調查離開確認可取消、可捨棄，且不呼叫原生 confirm (237.3684ms)
+✔ 審查回歸：試用清理失敗保留待存資料，成功後不會被佇列重新寫回 (224.8097ms)
+✔ Edition 在非 Tauri 環境預設為 std (1.9702ms)
+✔ Edition 在 Tauri 環境固定辨識為正式版 pro (0.9948ms)
+✔ 過期或未知的版本標記不會建立第三種產品 (3.0494ms)
+✔ std 與 pro 功能相同，只有 Tauri 工作區能力不同 (2.3006ms)
+✔ applyDOMVisibility 設定執行環境並隱藏非 Tauri 的工作區入口 (1.1294ms)
+✔ #47 — js/ 下 UI.toast({intent:"danger"}) 已收斂到允許清單 (45.7923ms)
+✔ #47 — UI.handleError API 仍存在於 ui.js (3.3763ms)
+✔ #47 — 允許清單為空（所有 danger toast 已收斂至 UI.handleError） (0.1834ms)
+✔ #47 — UI.handleError 在 mode:"modal" + 2 actions 時走雙按鈕 confirm (5.4133ms)
+✔ #47 — state-persistence.js 已移除瀏覽器損壞副本處理，SQLite 錯誤由寫入鎖呈現 (3.7694ms)
+✔ #47 — state-persistence.js 使用統一 UI.handleError 呈現寫入鎖與儲存失敗 (1.7695ms)
+✔ ARC-001：事件驗證是無 DOM／UI 副作用的獨立 domain 模組 (1.7919ms)
+✔ ARC-001：完成節點缺日期或時間會回傳阻擋描述 (0.934ms)
+✔ ARC-001：送達資料依相同順序驗地區方式、送達日與日期先後 (0.8769ms)
+✔ ARC-001：免傳缺理由會阻擋，建議文件缺漏則交由 Action 確認 (0.8295ms)
+✔ 案件申請書是完成收件節點的強制文件，不得略過 (0.7257ms)
+✔ FIX-004：受理通知與處理結果通知必須逐一完成應通知當事人的送達 (0.8925ms)
+✔ FIX-004／FIX-006：缺少或重複代號時不得把一筆送達當成多人完成 (0.7721ms)
+✔ FIX-008：後段程序不得在必要前置程序未完成時標示完成 (0.7238ms)
+✔ FIX-009：調查人員迴避回報必須有結果與簽署紀錄或具體免傳原因 (0.8356ms)
+✔ actions-utils 定義共用列渲染 buildExpertPickerLabel (2.3742ms)
+✔ 調查委員帶入（action-registry.js）改用共用列渲染、不再自拼卡片 (0.2189ms)
+✔ 委員綁定專家（daily-work-committee.js）改用共用列渲染、不再自拼卡片 (0.1904ms)
+✔ State.filter 預設帶 appeal:"all" (2.6133ms)
+✔ index.html 提供申復狀態 chip 群與 setFilterAppeal 委派動作 (1.3943ms)
+✔ UI.setFilterAppeal 寫入 State.filter.appeal 並觸發 caseList 重繪；resetFilter 還原 all (3.2067ms)
+✔ Render._caseAppealState 依 appealDeadline / appealReviewPanel 配對判定狀態 (2.3218ms)
+✔ Render._caseMatchesFilter：appeal 篩選只命中對應狀態 (0.9456ms)
+✔ filterChrome 同步反映 appeal chip active 狀態 (2.8161ms)
+✔ FIX-011：只有未成年行為人時不啟動社政通報期限，並列入既有案件影響清單 (41.5214ms)
+✔ FIX-011：影響清單確認只套用於同一批案件，切換工作區後不會沿用 (2.4914ms)
+✔ FIX-011：年齡數值與成年標示衝突時回傳明確警告 (10.581ms)
+✔ FIX-010：收到申請只建立權益說明待辦，不會替承辦人標示完成 (36.3112ms)
+✔ FIX-013／FIX-014：教育部審查通過但申復尚未人工確認時不得視為結案 (9.8474ms)
+✔ FIX-013：通知只送達一人或手動結案未填日期，都不得顯示完成 (43.8429ms)
+✔ FIX-015：五種正式輸出都引用同一個密件標示來源 (7.0446ms)
+✔ full case report offers lightweight and attachment-embedded modes (5.1991ms)
+✔ BKP-001/002：完整工作區備份先 flush、選目錄、敏感資料確認後呼叫原生備份 (3.9215ms)
+✔ BKP-001：SQLite snapshot 明示不含附件原檔 (0.9349ms)
+✔ BKP-003：完整還原固定為 preflight、強確認、restore、full hydrate (1.1035ms)
+✔ BKP-003：損壞備份預檢失敗不得 restore 或 reload (0.9084ms)
+✔ BKP-003：restore 失敗不得 reload；提交後 reload 失敗不得宣稱未變更 (1.5135ms)
+✔ BKP-001：備份中心逐項標示 JSON、完整備份與 SQLite snapshot 契約 (2.5839ms)
+✔ H2: state-process.js 不再寫 statusAutoFromMoeReview sentinel (0.9584ms)
+✔ H2: derivedCaseSummary 函式存在並回傳 {status, closedAt, archiveDueAt} (0.3946ms)
+✔ H2: derivedCaseSummary 尊重 statusManualOverride 旗標 (0.1664ms)
+✔ H2: 不得重新引入 computedCaseStatus 向後相容包裝 (0.1633ms)
+✔ H2: ensureProcessFramework 結尾以 derivedCaseSummary 單一寫入點同步 c (0.2811ms)
+✔ H2: archive-actions.js saveArchiveSettings 標記 statusManualOverride=true (0.1626ms)
+✔ H3: legacy decisionResult label migrates to stable decisionValue (52.4425ms)
+✔ H3: process derivation uses decisionValue helpers, not mutable labels (36.3115ms)
+✔ holidayModal 含年度 JSON 預檢與手動校務假日表單 (355.1927ms)
+✔ 年度日曆 actions 以手動層保存日期，且舊版 addYear 路徑已移除 (0.6743ms)
+✔ render.js holidayCoverage 指向年度辦公日曆入口 (0.6577ms)
+✔ CAL-BUILTIN-001：只內建 2025、2026，AI 匯入起始年為 2027 (1.2979ms)
+✔ CAL-BUILTIN-002：內建資料只含一般週制例外，且日期與年度一致 (0.6236ms)
+✔ CAL-BUILTIN-003：2025 有 15 個平日放假與 1 個週末補班 (1.0389ms)
+✔ CAL-BUILTIN-004：2026 有 16 個平日放假且沒有週末補班 (0.2164ms)
+✔ CAL-BUILTIN-005：呼叫端取得的是副本，不能改寫模組內建基準 (0.204ms)
+✔ F01-CONTRACT-001：完整合法的年度辦公日曆可通過嚴格契約 (2.876ms)
+✔ F01-CONTRACT-002：民國年、錯誤日期、跨年度及重複日期會被阻擋 (1.7992ms)
+✔ F01-CONTRACT-003：未知欄位、錯誤日別與含路徑檔名會被阻擋 (0.7854ms)
+✔ F01-CONTRACT-004：一般週末 holiday、平日 workday、空來源與 AI 警告要求人工確認 (14.5642ms)
+✔ F01-CONTRACT-005：提示詞完整限制外部 AI，且不讀案件、不連網 (1.5562ms)
+✔ F01-CONTRACT-006：格式範例不夾帶年度日期，只有使用者指定的年度與空 days (2.1489ms)
+✔ F01-CONTRACT-007：只接受單一 JSON 物件並限制文字大小 (38.728ms)
+✔ CAL-CONTRACT-001：AI JSON 只接受 2027 年起，2025、2026 明確拒絕 (1.0691ms)
+✔ F03-DEADLINE-001：候選日曆只回報期限有變化的案件且還原全域集合 (2.6975ms)
+✔ F02-PREFLIGHT-001：首次匯入產生唯讀 create 計畫、SHA-256 與完整新增差異 (49.8149ms)
+✔ F02-PREFLIGHT-002：同年度正式資料採取代，列出新增、刪除與內容變更 (1.7333ms)
+✔ F02-PREFLIGHT-003：非目前 official 狀態直接拒絕 (1.0907ms)
+✔ F02-PREFLIGHT-004：目前 profile 年度不符或狀態未知時阻擋，不產生計畫 (1.6002ms)
+✔ F02-PREFLIGHT-005：契約錯誤與 SHA-256 無法產生時阻擋，不留下候選資料 (1.6825ms)
+✔ F02-PREFLIGHT-006：來源警告保留，仍須明確確認 (2.174ms)
+✔ F02-PREFLIGHT-007：預檢不修改輸入 JSON 或目前 profile (1.2564ms)
+✔ F02-PREFLIGHT-008：差異依日期排序，相同資料只計為 unchanged (0.8575ms)
+✔ F04-DATA-001：全新設定不持久化內建層，但 2025、2026 立即生效 (35.9887ms)
+✔ F03-DATA-001：正式匯入同年度採取代，其他年度與手動日期保留 (3.2053ms)
+✔ F03-DATA-002：學期假日只疊加有效集合，不寫入年度 profile (0.8296ms)
+✔ DATA-203：每次有效日曆重建都推進 revision (0.7011ms)
+✔ F03-DATA-003：儲存失敗時不改目前記憶體狀態 (0.9264ms)
+✔ F04-DATA-003：清除年度正式匯入資料不刪除手動日期或其他年度 (1.9026ms)
+✔ F04-DATA-005：2025、2026 不接受正式 JSON 取代，內建層也不寫進設定 (0.8309ms)
+✔ F04-DATA-004：未來版本設定直接拒絕，不覆寫原始儲存內容 (1.0424ms)
+✔ F03-RUNTIME-001：全域 facade 發布 HOLIDAYS 與 WORKDAYS (23.4699ms)
+✔ F04-RUNTIME-001：facade 不再公開舊版 save 與 addYear 入口 (1.6701ms)
+✔ F03-RUNTIME-002：正式 profile 可滿足年度涵蓋檢查 (2.0588ms)
+✔ CAL-RUNTIME-001：2025、2026 內建 profile 可滿足年度涵蓋檢查 (2.1333ms)
+✔ CAL-RUNTIME-002：工作區物化的內建 rows 不會重開後誤轉成手動假日 (2.8492ms)
+✔ CAL-RUNTIME-003：工作區缺少目前行事曆設定時直接拒絕 (1.9063ms)
+✔ F03-DATE-001：週末 workday 覆寫一般週末規則 (1.8049ms)
+✔ F03-DATE-002：同日明確假日優先於 workday (0.3602ms)
+✔ F03-DATE-003：平日 holiday 維持非工作日 (0.1802ms)
+✔ F03-DATE-004：沒有任何年度資料時只套用一般週末規則 (0.149ms)
+✔ F03-DATE-005：期限末日遇平日假日，可順延到補行上班的週末 (0.2016ms)
+✔ V1.2 幽默模式：HUMOR_COPY 每一筆文案都已接到畫面或內部輪替流程 (265.7637ms)
+✔ V1.2 新增情境文案已接上授權、備份、統整、模板、文稿與資料檢查 (61.5282ms)
+✔ U1 跟隨系統：theme.set 支援 auto 且 index.html 有對應 menu 項 (3.7097ms)
+✔ V1+V2 dark theme 整合：style.css 不存在重複的 :root[data-theme="dark"] 完整 token block (0.9104ms)
+✔ 目前完整移轉包可匯入並提供結構化檢查結果 (17.1372ms)
+✔ 缺少、非整數與非目前 packageVersion 都會阻擋 (10.4833ms)
+✔ 舊 packageType、舊 graph 與舊 state 結構不再辨識為可匯入格式 (4.8595ms)
+✔ 單案移轉包必須且只能包含一案 (5.1261ms)
+✔ assertImportFileSize: helper 存在並有正確預設值 (22.5017ms)
+✔ 正常大小檔案 (< 50MB) 回 true (21.4262ms)
+✔ 剛好等於 50MB 仍 OK (7.7717ms)
+✔ 超過 50MB 回 false (6.756ms)
+✔ 自訂 limitMb（遷移包 500MB） (5.9157ms)
+✔ null / undefined file 安全處理（回 true 讓上層 short-circuit） (6.1585ms)
+✔ label 參數會出現在 handleError 訊息 (7.8254ms)
+✔ 無 UI 環境仍會回報，但不得使用原生 alert (5.5378ms)
+✔ 5 處 import handler 都已套用 size guard (12.8908ms)
+✔ Batch 1: 過濾列 inline handler 已移除 (10.7518ms)
+✔ Batch 1: 匯入 file input 已用 actions.handle-event 取代 (4.9186ms)
+✔ Batch 1: Sidepanel 六個 tab 已用 sidepanel.switch (0.8533ms)
+✔ Batch 1: caseModal 與 personModal × 關閉鈕已 delegated (0.5625ms)
+✔ dom-actions.js 已加入新 case (0.3951ms)
+✔ 整體進度：index.html inline handler 已歸零（Batch 1-4 全部完成） (0.8317ms)
+✔ Batch 4: 所有 modal 已 delegated (2.3138ms)
+✔ dom-actions.js 新增 handler 已就位 (0.1729ms)
+✔ #40 — process-checklist.js 動態 render 已用 data-action (0.4851ms)
+✔ #40 — templates.js 動態 render 已用 data-action (0.7215ms)
+✔ #40 — js/ 動態 inline handler 在已遷移檔案中保持 0 (3.3057ms)
+✔ #40 第二批 — DomActions 已支援新 case (0.1207ms)
+✔ #40 第二批 — folder-actions.js 已用 data-action="folder.toggle-all" (0.3477ms)
+✔ #40 第二批 — action-registry.js 人才庫 editExpert / deleteExpert / toggleExpertPick 已遷移 (0.4181ms)
+✔ #40 第二批 — bulk-export-actions.js 4 處 inline handler 已遷移 (2.6252ms)
+✔ #40 第三批 — event-actions.js 17 處 inline handler 已遷移 (5.4205ms)
+✔ #40 第三批 — DomActions 已支援 delivery / investigator / attachment cases (0.1337ms)
+✔ #40 第三批 — update-field 自動分流 checkbox / value (0.1785ms)
+✔ #40 第四批 — render.js 10 處 inline handler 已遷移 (23.4323ms)
+✔ #40 第四批 — DomActions 已支援 filter.toggle-type / filter.toggle-status / case.select (0.1339ms)
+✔ #40 收尾 — inline-handler-fix.js 已從 js/ 移除 (0.1629ms)
+✔ #40 收尾 — index.html 已移除 inline-handler-fix.js script tag (0.2357ms)
+✔ #40 收尾 — module-manifest.json 已移除 inline-handler-fix.js 條目 (0.47ms)
+✔ Batch 2: caseModal 內部 inline handler 已清空 (1.0678ms)
+✔ dom-actions.js handleChange 支援 actions.call (通用) (0.1186ms)
+✔ N2：index.html 內 inline style 屬性數不得超過 baseline (7.7329ms)
+✔ N2：baseline 不可比實際多（避免 baseline 與實況脫節） (4.4347ms)
+✔ N2：style.css 已宣告 .u-* utility class 區段 (1.752ms)
+✔ N2：style="width:auto" 已被全面移除（重複定義 — 全域 CSS 第 521 行已等價） (5.0275ms)
+✔ 預設事件順序：移交性平會在受理通知前，調查與訪談在受理通知後 (24.188ms)
+✔ 受理通知明確受理後自動建立第 1 次訪談會議與受訪人清單 (28.3779ms)
+✔ 僅移交性平會決議受理但尚未發文通知時，不展開調查與訪談 (8.4847ms)
+✔ 訪談會議完成後，依受訪人自動建立上傳訪談稿節點且不重複 (8.468ms)
+✔ 訪談稿必要文件可用逐字稿或摘要稿抵免 (8.9924ms)
+✔ 調查人員迴避情況回報節點要求雙方簽署紀錄 (11.2099ms)
+✔ 訪談時程 UI 與腳本已接入 index / manifest (2.3643ms)
+✔ 訪談時程一次只鎖定一場未完成訪談 (8.1414ms)
+✔ 訪談時程不再自動生成或儲存 PDF 附件 (0.7248ms)
+✔ 全外聘強制條件只看行為人，不因被害人為教職員而觸發 (24.7453ms)
+✔ 三處當事人表單都提供校長、教師、職員、工友四種現行身分 (2.0518ms)
+✔ investigation group compliance requires three members, all external for staff respondents, and MOE talent (12.5816ms)
+✔ 教職員被害人、學生行為人不會出現全外聘強制檢覈 (10.4669ms)
+✔ 受理後分支在教職員工行為人案件固定為成立調查小組 (10.7971ms)
+✔ 任一方持有身心障礙證明或有效特教鑑定證明時要求特殊教育專業者 (10.7926ms)
+✔ A-5：MOE talent requirement scales by one-third ratio (5-member group needs 2) (10.4408ms)
+✔ expert repository carries MOE talent flag into investigator rows (11.8269ms)
+✔ 調查小組組成檢核不再混入迴避情況；迴避改由獨立節點檢核 (2.5486ms)
+✔ normalizeCase 為無 id 的調查委員補上穩定 id (29.1169ms)
+✔ normalizeCase 保留內容完全相同但 id 不同的兩位委員 (14.232ms)
+✔ normalizeCase 不誤刪同名但內容不同的委員 (12.78ms)
+✔ normalizeCase 只收斂 id 相同的重複列，且再次執行不再變動 (12.7721ms)
+✔ JavaScript 程式碼只使用六個用途目錄，根目錄不再放程式檔 (1.5002ms)
+✔ 模組清單完整涵蓋六個目錄內的所有 JavaScript 程式檔 (12.8535ms)
+✔ 操作檔案名稱統一使用動作名稱加上 -actions (0.4869ms)
+✔ 所有 JavaScript 程式都納入統一排版檢查 (15.144ms)
+✔ 測試、主頁、樣式、設定與現行文件都納入統一排版檢查 (0.5214ms)
+✔ D1: libs/jszip.min.js 存在且為合法 JS (1.3867ms)
+✔ D1: JSZip UMD 可在 sandbox 載入並掛載為全域 (9.4275ms)
+✔ D1: JSZip 可產出 ZIP bytes 並反向解開 (17.9358ms)
+✔ D1: index.html 與 license-agreement.js 已登記 JSZip (2.3837ms)
+✔ L3: Deadline hour-level cache stamp includes minute precision (1.1615ms)
+✔ L7: UI confirm focus delay is named, not an inline magic number (3.5634ms)
+✔ M8: State default object is expanded for reviewable diffs (0.4778ms)
+✔ M4: delivery row rendering is split into focused helpers (11.53ms)
+✔ 年度基準：DEFAULT_HOLIDAYS 內建 2025、2026 的平日放假例外 (46.3827ms)
+✔ L4: shouldPromptYearUpdate returns null when > 90 days from year end (25.2339ms)
+✔ L4: shouldPromptYearUpdate prompts early when existing deadlines exceed holiday data year (9.3205ms)
+✔ L4: shouldPromptYearUpdate returns null when next year data exists (7.8373ms)
+✔ L4: shouldPromptYearUpdate returns next year when within 90 days and no data (9.5197ms)
+✔ L4: dismissYearUpdatePrompt writes app-settings SQLite cache and subsequent calls return dismissed (7.8508ms)
+✔ L4: main.js startup chain calls HolidayManager.shouldPromptYearUpdate and shows warning toast (20.2875ms)
+✔ .gitignore 必須存在並排除關鍵敏感／產物路徑 (1.2542ms)
+✔ 根目錄不再有 任務管理.txt（已搬至 docs/） (0.2338ms)
+✔ index.html 不得再出現舊文案「新增案件」「新增事件」（已改為任務語言） (2.6879ms)
+✔ 無管轄權案件建立 7 個工作日移送節點，並停用本校 3 日與 20 日規則 (56.8783ms)
+✔ 不受理申復收件後建立 20 日再議節點，不混入 30 日處理結果申復節點 (32.6134ms)
+✔ 不受理申復有理由時，以再議結果日期啟動調查期限 (10.8737ms)
+✔ 一般案件期限直接指向受理通知公文，舊版節點只保留歷史內容且不得被改寫 (11.2024ms)
+✔ 只有舊版 gecAccepted 而沒有有效書面來源時，不得啟動調查期限 (18.8577ms)
+✔ 調查期限規則只有一個來源解析器且不再引用舊版起算節點 (17.5921ms)
+✔ 封存包整理提醒與法定 25 年保存期限分開計算 (19.4157ms)
+✔ 案件封存狀態可安全呼叫脫離物件傳遞的日期方法 (22.8311ms)
+✔ 函式庫並行載入共用工作；失敗移除 script，下一次能重試 (2.2038ms)
+✔ LICENSE-002：已授權設備可新增案件，未授權只顯示新增限制 (3.4623ms)
+✔ LICENSE-002～005：所有目前新增案件入口與 Rust 寫入層都有守門 (2.0276ms)
+✔ LICENSE-001／005：正式程式只收公開金鑰，作者私鑰不在正式建置範圍 (4.3401ms)
+✔ LICENSE-007～009：強制閱讀、完整版契約與支援回覆使用同一組界線 (19.5039ms)
+✔ R-LOSS-1／FIX-016：Rust 攔截第一次關閉並等待明確確認 (2.0946ms)
+✔ R-LOSS-1／FIX-016：成功與失敗確認命令都有註冊 (0.2243ms)
+✔ R-LOSS-1／FIX-016：Rust 與前端事件名稱一致 (0.1476ms)
+✔ R-LOSS-1／FIX-016：close-flush 模組在 main 之前載入並立即安裝 (0.3356ms)
+✔ R-LOSS-1／FIX-016：前端必須等待案件、reference 與設定的統一 flush 才呼叫完成命令 (0.8361ms)
+✔ M1: state-process.js 不再有 > 600 字單行 (1.1787ms)
+✔ M2: render.holidayCoverage 已多行展開，不再單行 400+ 字 (0.3277ms)
+✔ M3: overview stats 用 mkStatCard helper 而非單行 innerHTML (0.3183ms)
+✔ M5: event-actions.js 含 DECISION_OPTIONS 常數表 (0.2616ms)
+✔ M5: decisionOptionsForKind 改為從常數表查找 (0.1789ms)
+✔ M5: DECISION_OPTIONS 涵蓋全部 22 個原 if-return 的 kind (0.679ms)
+✔ M6: state-process.js declares module-local _Expanders IIFE (3.4083ms)
+✔ M6: _Expanders.application has 5 lifecycle phase methods (2.8039ms)
+✔ M6: _Expanders.appeal has 6 appeal-lifecycle methods (0.4174ms)
+✔ M6: _Expanders.reconciliation has applyAll method that prunes 5 kinds (1.1563ms)
+✔ M6: makeEnsureAppealDeadline factory exists with c-bound closure (0.6467ms)
+✔ M6: ensureProcessFramework is now a thin orchestrator (< 30 lines, calls phase methods) (0.2588ms)
+✔ M6: ordering preserved — 申復展開與清理完成後才推導結案 (0.1587ms)
+✔ M7: EventForm helper is exported and listed in module manifest (0.9049ms)
+✔ M7: EventForm provides collect/fill primitives for event modal core fields (0.1956ms)
+✔ M7: openEventModal and saveEventFromModal use EventForm as their core boundary (1.9603ms)
+✔ main.js 可由瀏覽器相同的 Script 文法完整解析 (1.4205ms)
+✔ 提醒門檻方法由獨立 Actions 模組登錄，不得混回啟動檔 (1.1169ms)
+✔ investigationGroupMeeting 標 deprecated 且不在新增節點下拉；interviewMeeting 仍存續 (4.2211ms)
+✔ event-actions：interviewMeeting 納入出席委員名單／組成檢核／投票員儲存 (9.0786ms)
+✔ process-checklist：法定檢核錨點涵蓋 interviewMeeting (1.262ms)
+✔ collectMigrationAttachmentRefs 會分開工具內原檔與外部索引 (20.0456ms)
+✔ 共用附件會保留多個事件關聯供匯出時合併 refs (12.5296ms)
+✔ 移轉 manifest counts 涵蓋 graph 與附件宣告筆數 (9.5429ms)
+✔ 匯入預覽辨識目前完整與單案移轉包內容 (23.5594ms)
+✔ 一般 JSON 預覽仍保留附件與 schema 風險 (8.729ms)
+✔ ImportPreview.safeLabel 保留原文字，由畫面輸出時負責跳脫 (8.6483ms)
+✔ 完整工作區移轉包拒絕非交易式前端寫入旁路 (8.897ms)
+✔ 附件大小或 hash 不符會在寫入前阻擋 (65.4859ms)
+✔ 單案移轉包會追加案件、還原附件且不清除既有原檔 (13.6472ms)
+✔ 大型附件 base64 解碼使用非同步原生路徑 (36.6003ms)
+TypeError: window.safeHtml is not a function
+    at Object.toast (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:120:189)
+    at Object._nudgeLockedModal (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:640:19)
+    at Document.blockBackdropDismiss (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:668:41)
+    at Document.callTheUserObjectsOperation (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\generated\idl\EventListener.js:26:30)
+    at innerInvokeEventListeners (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLDivElementImpl._dispatch (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:227:9)
+    at HTMLDivElementImpl.dispatchEvent (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+    at HTMLDivElement.dispatchEvent (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\generated\idl\EventTarget.js:241:34)
+    at TestContext.<anonymous> (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:43:9)
+TypeError: window.safeHtml is not a function
+    at Object.toast (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:120:189)
+    at Object._nudgeLockedModal (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:640:19)
+    at Document.blockBackdropDismiss (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:668:41)
+    at Document.callTheUserObjectsOperation (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\generated\idl\EventListener.js:26:30)
+    at innerInvokeEventListeners (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLDivElementImpl._dispatch (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:227:9)
+    at HTMLDivElementImpl.dispatchEvent (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+    at HTMLDivElement.dispatchEvent (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\generated\idl\EventTarget.js:241:34)
+    at TestContext.<anonymous> (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:65:12)
+✔ 一般彈窗只能由明確關閉動作結束 (185.7257ms)
+TypeError: window.safeHtml is not a function
+    at Object.toast (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:120:189)
+    at Object._nudgeLockedModal (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:640:19)
+    at Document.blockBackdropDismiss (eval at loadUi (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:29:10), <anonymous>:668:41)
+    at Document.callTheUserObjectsOperation (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\generated\idl\EventListener.js:26:30)
+    at innerInvokeEventListeners (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:360:16)
+    at invokeEventListeners (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:296:3)
+    at HTMLDivElementImpl._dispatch (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:227:9)
+    at HTMLDivElementImpl.dispatchEvent (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\jsdom\living\events\EventTarget-impl.js:114:17)
+    at HTMLDivElement.dispatchEvent (H:\Users\Fehu-play\Desktop\性平案件管理工具\node_modules\jsdom\lib\generated\idl\EventTarget.js:241:34)
+    at TestContext.<anonymous> (H:\Users\Fehu-play\Desktop\性平案件管理工具\tests\modal-dismiss-lock.test.js:84:9)
+✔ 確認視窗誤點背景或按 Escape 都不會遺失內容 (30.1569ms)
+✔ 動態建立的授權聲明視窗也只能明確關閉 (96.2141ms)
+✔ 切換工作區會清掉舊提示與其他彈窗，但保留工作區設定視窗 (15.5174ms)
+✔ 切換工作區會取消延遲寫入並清除所有表單草稿 (40.0956ms)
+✔ case and event modal submit buttons do not depend on inline arrow handlers (56.8152ms)
+✔ DomActions parses numeric data args for wizard navigation (0.1831ms)
+✔ module manifest matches index.html script order (2.5447ms)
+✔ module manifest files exist and declare exports as strings (20.5159ms)
+✔ module manifest documents critical global boundaries (0.2667ms)
+✔ #41 — manifest exports must match actual globals or documented mixins (47.6764ms)
+✔ #41 — requires 欄位必須指向 manifest 中存在的檔案 (0.9455ms)
+✔ #41 — requires 必須在當前模組之前載入 (0.2765ms)
+✔ #41 — requires 不可含自我引用 (0.466ms)
+✔ #41 — 核心鏈關鍵 requires 已標明（防被誤刪） (0.2139ms)
+✔ #41 — schemaVersion 升級到 2 以反映 requires 欄位 (0.2193ms)
+✔ 應用程式碼不得呼叫原生 alert／confirm／prompt (82.0311ms)
+✔ 掃描器本身要能分辨呼叫與文字，否則守門不是誤放就是誤擋 (0.2798ms)
+✔ UI.confirm 在找不到容器時視為取消，不得退回原生對話框 (0.5865ms)
+✔ capability 只開放選檔用的 dialog:allow-open，不得為了遷就原生對話框而放寬 (0.3599ms)
+✔ 使用者建立未綁 partyKey 的 appealReceived 後，不應自動產生 appealDecision 節點 (49.5659ms)
+✔ 既有 appealDecision 事件不被自動刪除（保留承辦人已填寫紀錄） (20.5327ms)
+✔ data-health-actions.js 偵測 legacy appealDecision 並提示遷移 (0.9885ms)
+✔ N1：每檔 innerHTML 出現次數不得超過 baseline（防新增未守門 callsite） (187.4234ms)
+✔ N1：baseline 不可比實際多（避免 baseline 與實況脫節） (63.0296ms)
+✔ N1：safeHtml / rawHtml 已暴露為 window.* 且 esc 收斂 (16.751ms)
+✔ N1：module-manifest 鎖 dom-safe.js requires state.js 且排在 state.js 之後 (1.2817ms)
+✔ N1：index.html 把 dom-safe.js 排在 state.js 之後 (1.5713ms)
+✔ 每條 RULES 的 trigger / complete 都是有效 EVENT_KINDS id (4.5345ms)
+✔ 每條 RULES 都有 category（statutory/appeal/internal） (4.6707ms)
+✔ REQUIRED_DOCS / DECISION_OPTIONS / DECISION_VALUE_ALIASES 的 key 都是有效 EVENT_KINDS id (3.4509ms)
+✔ appealDecision 標為 deprecated 且不應出現在新增節點下拉（N1） (1.7446ms)
+✔ R2-1：每個 DECISION_OPTIONS 非空 value 都以 `${kind}.` 命名空間開頭 (1.6909ms)
+✔ R2-2：DECISION_VALUE_ALIASES 的 kind 與每個別名目標 value 都實際存在 (1.9369ms)
+✔ R2-3：decisionValueFor 對 value／label／別名皆可正確還原 (2.1826ms)
+✔ N2：受理三節點（收件／移交／受理通知）皆有 tip 說明 (1.5723ms)
+✔ R2-4：程式中硬寫的 decisionValue 字面值仍存在於 DECISION_OPTIONS (1.775ms)
+✔ normalizeCase fills required top-level buckets and default status (24.6019ms)
+✔ DATA-001：normalizeCase 為舊送達紀錄補穩定 id 並排除無效項目 (12.7187ms)
+✔ normalizeCase keeps role arrays and supports legacy role strings (11.8991ms)
+✔ person role helpers normalize empty, string, and array roles (10.5539ms)
+✔ school personnel type only accepts principal, teacher, staff, and worker (9.8488ms)
+✔ person age helpers support adult/minor status and legacy numeric age (14.4882ms)
+✔ normalizeCase stores ageStatus/isMinor and hasMinorParty uses the new status (14.1848ms)
+✔ normalizeCase stores current disability and special-education proof fields and removes the obsolete student flag (9.9807ms)
+✔ normalizeCase 把 1.1 的特教生勾選換名為特教鑑定證明，而不是丟掉 (12.2123ms)
+✔ normalizeCase 不因舊欄位為 false 就翻轉既有的特教鑑定註記 (18.7232ms)
+✔ professional ethics cases warn when student minor status is unknown (9.7811ms)
+✔ id uses crypto.randomUUID when available (9.7552ms)
+✔ normalizeCase creates baseline process nodes from known and application received events (23.8415ms)
+✔ sexual assault cases require social welfare report even when parties are adults (57.0791ms)
+✔ normalizeCase marks media report cases as reports (9.4234ms)
+✔ normalizeCase does not treat an incomplete legacy closed date as completed (11.1567ms)
+✔ normalizeCase converts legacy report24 not-applicable status to pending (17.544ms)
+✔ normalizeCase uses the current structured category and subtype (9.2955ms)
+✔ normalizeCase creates acceptance appeal deadline from non-acceptance notice delivery (16.1811ms)
+✔ normalizeCase branches accepted case to investigation group setup when group is established (11.8131ms)
+✔ normalizeCase branches accepted case to investigation method when no group is established (10.6103ms)
+✔ required document checks only include social report when law-triggering conditions exist (13.1307ms)
+✔ 一般必要文件可用具體理由免傳，但案件申請書不得免傳 (10.5803ms)
+✔ FIX-021：舊式單一 SQLite 還原入口已完整移除 (3.2402ms)
+✔ OPS-004：桌面建置清單不再包含損壞且不存在的舊 PDF 名稱 (0.3677ms)
+✔ 沒有歷程但有承辦人時，合成一筆首任而不是回傳空清單 (1.8391ms)
+✔ 完全沒有承辦人時回傳空清單，不得憑空造出一個空名字的任期 (0.6109ms)
+✔ 已執行節點只計入有實際發生時間者，並依時間排序 (0.2967ms)
+✔ 交接會結束現任任期並開啟新任，節點依指派歸屬 (0.4713ms)
+✔ planHandover 不得改動傳入的案件 (0.2887ms)
+✔ 節點可以跨任指派：交接前的歸前任，交接後的歸新任 (0.1905ms)
+✔ 備註是選填，不填也能交接 (0.1723ms)
+✔ 任一項不合法就整批拒絕，並一次列出全部問題 (0.2383ms)
+✔ 更換日期不得晚於今天 (0.2289ms)
+✔ 更換日期不得早於現任的到職日 (0.3517ms)
+✔ A→A 未填備註時擋下：那是同一人被重複登錄，會產生空任期 (0.2291ms)
+✔ A→A 填了備註時放行：那是同名同姓的另一人，擋下等於排除正確事實 (0.1742ms)
+✔ A→B→A 回任放行且不要求備註：承辦人回任是常態 (0.1548ms)
+✔ A→B→C→A 同樣放行，只有「連續同名」才需要說明 (0.1698ms)
+✔ A→B(同名A) 之後再換一次：仍以「是否與現任同名」判斷，不看更早的任期 (0.2182ms)
+✔ 重複出現的姓名要能被指出，供畫面提醒使用者看備註 (0.3129ms)
+✔ isSameAsCurrent 供畫面在輸入當下就提示，不必等送出才擋 (0.1218ms)
+✔ 一個節點只會歸屬一任，不得同時算在兩人頭上 (0.1777ms)
+✔ 預設指派沿用既有歸屬，未指派者歸現任 (0.1741ms)
+✔ normalize 會丟掉沒有姓名的任期並修掉壞掉的日期 (0.2597ms)
+✔ A-1：明確不受理的案件不建立調查完成待辦，調查期限為 null (38.6542ms)
+✔ A-1：受理結果未明確受理前不展開調查；改為不受理時仍不建立調查節點 (13.703ms)
+✔ A-1：使用者已編修的調查節點即使不受理也不回收 (11.5421ms)
+✔ A-1：受理案件行為不變（節點存在、期限照算） (12.1365ms)
+✔ A-2：兩筆申復審議（最早=維持、較晚=主管機關重新調查）→ 40 日期限以較晚那筆起算 (11.7722ms)
+✔ A-4：申復期限尚未人工確認的案件仍出現在日常「案件最緊急」 (21.7203ms)
+✔ A-4：標記「不需封存」的進行中案件仍出現在日常「案件最緊急」 (10.5612ms)
+✔ B-2：computePeriodDue 始日不算入、起算日不順延、僅末日順延 (18.8567ms)
+✔ B-5：轉出節點未標完成、已填知悉轉出日（學生轉校）→ 期限即起算 (26.2577ms)
+✔ B-5：轉出類型未指定 → 不起算並提示先指定類型 (10.1492ms)
+✔ B-5：轉服務（學生以外）→ 不套期限、顯示人工追蹤 (9.8032ms)
+✔ B-5：沒有轉出事件的案件完全不出現轉出期限（有發生才有期限） (9.6259ms)
+✔ C-1：兩位當事人先後申復 → 各自 panel 依各自收件日＋30 顯示迄日 (39.2913ms)
+✔ C-1：使用者已編修的 panel 不被自動刷新 suggestedDate (11.0473ms)
+✔ C-2：不受理＋全部申復期限回報未申復 → 出現收尾建議 (10.7974ms)
+✔ C-2：進行中案件（申復期限未回報）不出現收尾建議 (9.5135ms)
+✔ C-2：申復全部審結＋報部完成 → 出現「待教育部審查」收尾建議 (10.2622ms)
+✔ C-3：通報追蹤社政欄位改可存列管（不再硬阻擋儲存） (0.6867ms)
+✔ FIX-011：hasMinorVictim 自動推導只看未成年被害人；人工勾選優先 (18.5539ms)
+✔ 4-2：每條 RULES 必須宣告 category（statutory|appeal|internal） (39.9737ms)
+✔ 4-2：deadlineCategoryOf 讀 category；無 category 時 fallback 與舊啟發式等價 (6.5096ms)
+✔ 4-1：attachmentMatchesDocType 支援別名與 canonical 映射；missingRequiredDocs 支援 waiver (6.333ms)
+✔ E-1/E-3：已刪除符號與空殼模組不得回潮 (2.5114ms)
+✔ F-1：App 內 UI 不得再以 JS 寫死語意色（深色模式破版來源） (3.2781ms)
+✔ F-1：.btn:active 按壓回饋與 [role="button"] 焦點樣式存在 (3.6857ms)
+✔ F-2：表單欄位 label 關聯基線（未關聯數只降不升） (10.4436ms)
+✔ F-3：dom-actions 具通用 role="button" 鍵盤觸發分支 (0.5011ms)
+✔ F-3：UI.showModal 移焦／困焦／closeModal 還焦 (7.7128ms)
+✔ F-3：滑鼠限定目標已補 role/tabindex（時間軸節點卡、日常表格列、狀態列捷徑） (4.3012ms)
+✔ F-4：--cream token 存在且色碼不得散落在規則裡 (4.3021ms)
+✔ F-4：JS inline style 基線（只降不升） (25.4562ms)
+✔ F-4：匯出類操作已掛 guard-key（防重複點擊） (3.763ms)
+✔ 官方 PDF 主程式、worker 與所有離線資源符合清冊 (67.7511ms)
+✔ PDF 資源守門阻擋 missing (3.9646ms)
+✔ PDF 資源守門阻擋 changed (5.2569ms)
+✔ PDF 資源守門阻擋 extra (17.2949ms)
+✔ PDF 資源守門阻擋 version (29.4703ms)
+✔ 每一個 pdfjsLib.getDocument 呼叫都必須帶 isEvalSupported: false (34.6095ms)
+✔ 不得以其他方式重新開啟 PDF.js 的 eval 路徑 (22.5898ms)
+✔ 內建 PDF.js 版本必須與授權清冊記載一致 (2.0906ms)
+✔ 授權清冊檢查腳本存在且已納入 check gate (0.4681ms)
+✔ 授權清冊以 lockfile 與 libs 目錄為事實來源，不得只靠人工維護 (0.3087ms)
+✔ 第三方授權文件不得殘留暫代的著作權人欄位 (0.3473ms)
+✔ normalizeCase 為當事人補穩定 id (28.4341ms)
+✔ 更換代號後，重推導使訪談受訪對象代號即時更新（依唯一代號補回穩定 id） (29.4567ms)
+✔ FIX-006：同名當事人只依穩定 id 辨識，不會抓到同名第一筆 (11.1488ms)
+✔ PersonMask 為唯一遮蔽實作（chronicles 定義 text/html） (3.5351ms)
+✔ delivery-zip 遮蔽委派 PersonMask、不再自帶星號/字典遮蔽 (0.2127ms)
+✔ PersonRepository 已掛在 window 並具備 list / get / upsert / removeAt / remove (22.909ms)
+✔ list 預設用 State.currentCaseId、空 case 回空陣列 (13.7765ms)
+✔ upsert 不帶 id 時自動產生並 push (12.9923ms)
+✔ upsert 帶相同 id 視為更新，不新增 (12.2991ms)
+✔ FIX-006：自動代號會找真正空缺，不會因刪除後重加而撞號 (15.6371ms)
+✔ FIX-006：同案代號必須唯一，但同名不同人可以各自保存 (12.9167ms)
+✔ get 依 id 找到對應 person，找不到回 null (13.8737ms)
+✔ removeAt 依索引刪除 (13.4334ms)
+✔ removeAt 對越界索引回 null (27.5002ms)
+✔ remove 依 id 刪除 (12.2946ms)
+✔ remove 找不到 id 回 null (14.4411ms)
+✔ removeAt 會阻擋仍被事件或文件引用的當事人 (11.9059ms)
+✔ #33 — person-actions.js 已不直接 c.persons.push / splice (0.4235ms)
+✔ #33 — archive-actions.js / deadline-extension-actions.js 已改 EventRepository (0.4672ms)
+✔ module-manifest.json 已宣告 PersonRepository export (0.4538ms)
+✔ #33 收尾 — ArchivePackageRepository / BulkExportPackageRepository 已就位 (11.7644ms)
+✔ ArchivePackageRepository.add 自動補 id 並 push (11.2705ms)
+✔ BulkExportPackageRepository.add + findByZipName + remove (11.3399ms)
+✔ #33 收尾 — archive-actions.js / bulk-export-actions.js 已不直接 push (0.5581ms)
+✔ module-manifest.json 已宣告新 Repository exports (0.4387ms)
+✔ B8/B-3: ensureAppealDeadlineForDelivery 統一走 computePeriodDue（D 次日起算 N 日＝迄日 D+N） (7.2909ms)
+✔ B8: appealDeadline arithmetic matches Deadline rule (1.178ms)
+✔ B2: moeReview state branch uses clear rmoeEv check, not regex hack (2.2732ms)
+✔ A1: ProcessChecklist.isItemDone uses every() for compound anchors (3.9212ms)
+✔ A1: integration — isItemDone returns false when only one of two anchors completed (3.2302ms)
+✔ A1: integration — manual items also require every applicable anchor checked (2.7676ms)
+✔ process checklist: not applicable is a resolved manual answer (2.4735ms)
+✔ require() 直接拿到程序檢核 export 物件 (0.7847ms)
+✔ PROCESS_CHECKLIST_META 明示來源與人工確認邊界 (0.2012ms)
+✔ PROCESS_CHECKLIST_ITEMS 每一項都有 no / title / source / anchors (0.2201ms)
+✔ ProcessChecklist.isApplicable 純函式可在 Node 端呼叫 (0.9776ms)
+✔ P1-1：application 生命週期四階段依序（known → received → acceptance → interview） (3.6277ms)
+✔ P1-2：ensureAD 工廠在任何使用它的階段之前建立 (0.9424ms)
+✔ P1-3：appealDeadline 推導（送達→appealDeadline）必須早於結案 derived 同步 (0.6417ms)
+✔ P1-4：MOE 審查階段早於結案同步 (1.6011ms)
+✔ P1-5：reconciliation 先整理程序鏈，結案推導最後執行 (0.7091ms)
+✔ idempotency: ensureProcessFramework 連跑 10 次 events 數不變 (42.4841ms)
+✔ reconcile: 調查路徑切換只保留目前路徑的系統節點 (15.7358ms)
+✔ safety: 調查路徑切換會保留已填寫的舊路徑節點 (12.5346ms)
+✔ reconcile: 訪談父節點不存在時清除未填寫的衍生訪談稿 (12.8961ms)
+✔ safety: 訪談父節點不存在時保留已有附件的衍生訪談稿 (11.5769ms)
+✔ reconcile: 刪除一筆送達後對應的 appealDeadline 自動消失 (11.6546ms)
+✔ reconcile: 修改 partyCode 不會留下舊 key 的鬼節點 (14.0374ms)
+✔ safety: 使用者已回報 (occurredAt) 的節點絕不被刪 (13.0303ms)
+✔ safety: 使用者填了 decisionResult 的自動節點不被刪 (14.8065ms)
+✔ safety: 使用者上傳附件的自動節點不被刪 (17.2559ms)
+✔ reconcile: appealReceived 在 appealDeadline 結果改回非「已申復」時被收掉 (14.2653ms)
+✔ reconcile: appealReviewPanel 在 appealReceived 不存在時被收掉 (16.692ms)
+✔ reconcile: reinvestigation40 在 appealReviewPanel 結果改變時被切換 (18.0799ms)
+✔ safety: 使用者手建的 appealReceived（無 autoOnly）絕不被 reconcile 刪除 (14.8457ms)
+✔ safety: appealDeadline 沒有 partyKey 時不被刪（保守處理） (11.3978ms)
+✔ isAutoNodeUntouched: 不會把使用者手建節點視為可刪 (8.9788ms)
+✔ DOC-003：metadata 守門可驗證目前版本與 schema (128.5799ms)
+✔ DOC-003：純函式能指出過期版號與測試基線 (4.941ms)
+✔ DOC-003：Node 與 Rust summary parser 以實際 runner 輸出更新基線 (0.7754ms)
+✔ DOC-003：check／CI 使用 metadata 與具測試數比對的 Node、Rust runner (1.1648ms)
+✔ GUARD-004：測試失敗仍中止，文件基線漂移只警告，且不得保留略過測試 (31.9069ms)
+✔ DOC-003：授權同意紀錄與畫面綁定目前應用程式版本 (0.5877ms)
+✔ readJsonFile 解析合法 JSON 並回傳物件 (2.5744ms)
+✔ readJsonFile 對損毀 JSON 會 reject (1.5897ms)
+✔ readJsonFile 對讀檔錯誤會 reject (1.8701ms)
+✔ fixture 宣告的每一個禁止值都被 policy 收錄 (0.9772ms)
+✔ 代號不得被誤列為禁止值 (0.9387ms)
+✔ 互為子字串的姓名必須正確替換，不得出現已知的錯誤輸出 (0.2351ms)
+✔ 遮蔽整份案件結構後，序列化結果不得殘留任何禁止值 (0.9218ms)
+✔ 遮蔽後仍保留代號，輸出仍可辨識是誰 (0.214ms)
+✔ 模擬 HTML 產物：逐段套用遮蔽後，整份 HTML 不得含禁止值 (0.2418ms)
+✔ 模擬 ZIP 產物：資料夾名、檔名與清冊都不得含禁止值 (0.3599ms)
+✔ 未遮蔽的產物必須被 gate 攔下，並指出洩漏位置 (0.4775ms)
+✔ report-page-builder 使用共用的 RedactionPolicy，不得自帶遮蔽實作 (1.5602ms)
+✔ 交付報告共用同一套遮蔽來源 (0.6901ms)
+✔ redaction modal supports cancelling long PDF generation (2.5988ms)
+✔ 姓名映射列出誰對應哪個代號 (2.4717ms)
+✔ 遮蔽版列出被排除的欄位，讓使用者知道報告會少什麼 (0.2683ms)
+✔ 附件檔名預覽反映實際會輸出的名稱 (0.2253ms)
+✔ 完整版不遮蔽任何內容，且明確標示用途 (0.2748ms)
+✔ 有當事人沒有代號時必須阻擋，而不是只警告 (0.8178ms)
+✔ 未知的版本一律當成遮蔽版，不得誤放行完整版 (0.2204ms)
+✔ 輸出驗證使用同一套 gate，未遮蔽內容會被攔下並指出位置 (0.3977ms)
+✔ 已完成遮蔽的輸出可以通過驗證 (0.1418ms)
+✔ 無代號當事人時輸出驗證同樣被擋下 (0.2088ms)
+✔ 檢核中心不得自行實作遮蔽，一律委派 RedactionPolicy (0.5482ms)
+✔ 缺少 RedactionPolicy 時明確拋錯，不靜默產生沒遮蔽的預覽 (0.415ms)
+✔ 預覽不改動來源案件 (0.2361ms)
+✔ 與 RedactionPolicy 的結果一致，不會各說各話 (0.1626ms)
+✔ ZIP entry 掃描同時涵蓋路徑與文字內容 (1.1279ms)
+✔ 檔名洩漏必須指出是哪一個 entry (1.1505ms)
+✔ 已完成遮蔽的 entry 清單可以通過 gate (0.5831ms)
+✔ 有當事人無代號時，即使 entry 全部乾淨也要中止交付 (0.2282ms)
+✔ redaction-policy 已納入正式載入順序 (4.0644ms)
+✔ 遮蔽開檔共用分段讀取並傳遞取消訊號，不讀取整份 Blob (3.1126ms)
+✔ 非 PDF 與未關聯附件不會交給 PDF 解析器 (0.8434ms)
+✔ 未儲存事件的暫存 PDF 也可以分段開啟 (0.7027ms)
+✔ 快速翻頁時舊頁不覆蓋新頁，頁面與暫存畫布均清理 (7.3085ms)
+✔ 關閉預覽會取消進行中的渲染、銷毀文件並清空畫布 (1.4741ms)
+✔ 異常尺寸不建立預覽畫布，保留明確錯誤與重試狀態 (0.9104ms)
+✔ 遮蔽輸出 null 失敗時清理畫布與頁面，不新增附件 (1.3606ms)
+✔ 遮蔽輸出 budget 失敗時清理畫布與頁面，不新增附件 (0.8813ms)
+✔ 遮蔽輸出 render 失敗時清理畫布與頁面，不新增附件 (1.0066ms)
+✔ 取消遮蔽輸出立即停止渲染，保留遮蔽框且不處理下一頁 (4.6174ms)
+✔ 切換案件後拒絕產生遮蔽附件 (0.8552ms)
+✔ 沒有副檔名但 MIME 為 PDF 的附件仍可開啟 (0.7513ms)
+✔ 清理失敗不阻塞下一次翻頁 (0.8872ms)
+✔ 姓名依長度由長到短替換，互為子字串時不得殘留 (1.6547ms)
+✔ 就讀學校與職稱也算可指認資料，會被替換為代號標記 (0.3407ms)
+✔ 年齡、性別與身分類別是統計性質，不列入禁止字串 (0.2899ms)
+✔ 代號本身不是識別資料，不得被列為禁止字串 (0.1743ms)
+✔ redactDeep 遞迴處理物件與陣列，但保留 id 與代號欄位 (0.3014ms)
+✔ scanForLeaks 回報位置與前後文，供使用者定位 (0.2111ms)
+✔ assertNoLeak 在偵測到未遮蔽識別資料時中止輸出 (1.1981ms)
+✔ assertNoLeak 對已完成遮蔽的內容放行 (0.1399ms)
+✔ 當事人沒有代號時必須阻擋輸出，不得靜默放行 (0.2834ms)
+✔ 無代號者的值仍會被替換為佔位符，不得原樣輸出 (0.2505ms)
+✔ 可加入額外禁止字串，用於案件以外的識別資料 (0.3481ms)
+✔ 沒有任何當事人時 policy 為空，不影響輸出 (0.1238ms)
+✔ 遮蔽必須在值層級完成，模組不得依賴 CSS 或畫面隱藏 (0.4552ms)
+✔ B-4：不受理申復 20 日 per-party 以各自送達日次日起算（末日遇假日順延） (36.6498ms)
+✔ B-4：rejectAppeal20 期限引擎與 per-party 節點同一套數學（案件層級取最晚送達） (14.4287ms)
+✔ B-4：partyKey 仍為 per-party 區隔（A:acceptanceNotice / B:acceptanceNotice） (11.658ms)
+✔ appeal30 對照組：per-party 各送達日獨立計算（行為未被 B-4 影響） (9.992ms)
+✔ B-3：送達次日為假日時，時間軸節點 suggestedDate 與期限引擎迄日一致 (12.1917ms)
+✔ 啟動封裝時只隔離不完整資料夾，完整舊成品維持原名 (877.0731ms)
+✔ 當次封裝失敗時改名保留半成品，不動既有成功版本 (768.583ms)
+✔ 正式建置在複製前端產物與 cargo build 之前先跑 check:full 與真實 Tauri E2E (0.8244ms)
+✔ 發行 gate 不得提供略過或忽略失敗的開關 (0.2809ms)
+✔ check:full 與 E2E 指令仍存在於 package.json (0.1988ms)
+✔ 格式檢查排除根目錄分析產物與發布副本，但保留正式來源 (97.9811ms)
+✔ 正式建置腳本附 UTF-8 BOM，供 Windows PowerShell 正確讀取中文 (0.438ms)
+✔ 封裝格式檢查不讀文件；錯誤程式格式仍失敗，文件另行檢查 (1039.5513ms)
+✔ 封裝成功後才寫入單一正式版 release manifest (1.9567ms)
+✔ index.html 總覽頁含「提醒邊界」固定提示列 (2.2172ms)
+✔ render.js 單案空狀態 hint 含「提醒邊界」與「不會主動通知」 (0.7516ms)
+✔ 功能說明手冊含「提醒邊界」章節 (1.1441ms)
+✔ index.html 暴露 reminderThresholdsModal 與四個輸入欄位 (1.2121ms)
+✔ menu 暴露提醒門檻設定入口 (15.2379ms)
+✔ data-store.js 暴露 reminderThresholds key (0.1775ms)
+✔ 獨立 Actions 模組提供三個 action 並走 sanitize + applyOverrides + DataStore 持久化 (0.3026ms)
+✔ main.js 在第一次 Render.all 之前嘗試載入並套用儲存的覆寫值 (0.2007ms)
+✔ saveReminderThresholds 對欄位空值不寫入、超界值會被 clamp (6.5651ms)
+✔ _isCaseCompleted 只依案件完成檢查與正式狀態分類 (1.0363ms)
+✔ FIX-014：總覽今日分頁必須包含所有今日到期項目 (3.2973ms)
+✔ Render exposes render-cycle deadline cache helpers (5.7543ms)
+✔ Render.all and Render.flush wrap work in withDeadlineCache (1.6494ms)
+✔ deadline-aware render regions use Render cache helpers (6.4006ms)
+✔ withDeadlineCache reuses Deadline.all result for the same case in one render cycle (3.0674ms)
+✔ deadlineKind separates legal, appeal, and internal reminders (1.1285ms)
+✔ nested withDeadlineCache keeps the outer cache alive (1.2118ms)
+✔ Render.timeline is read-only and does not create process nodes (189.0426ms)
+✔ Render.report timeline escapes user-provided event and attachment text (44.0673ms)
+✔ Render.report redaction escapes names before adding redacted markup (41.0757ms)
+✔ T1: transactionally imported workspace strings are escaped when rendered in report output (43.3498ms)
+✔ Render.REGIONS 字典存在並含關鍵 region (12.7739ms)
+✔ Render.flush 與 dirty-flag API 已就位 (5.5126ms)
+✔ Render.flush 空陣列 / 含 all 走 Render.all() (3.9543ms)
+✔ Render.flush 對未知 region 用 debugNonCritical 警告而非拋錯 (0.1641ms)
+✔ Render.markDirty 接受多個 region 名稱 (1.7473ms)
+✔ Render.flushDirty 清空 _dirty 並呼叫 flush (0.228ms)
+✔ Render.flushCurrentCase 標記目前案件需要的基礎 region (1.9762ms)
+✔ #35 第二階段第一至三批 callsite 已改用 flushCurrentCase (2.4074ms)
+✔ #35 剩餘 Render.all callsite 保持在全域流程允許清單內 (26.9651ms)
+✔ module-manifest.json 已標明 #35 第二階段累計 26 個 callsite (0.585ms)
+✔ Render.flush(["timeline"]) 只呼叫 timeline，不呼叫其他 region (1.3702ms)
+✔ module-manifest.json 已在 render.js 加 notes 標明 #35 第一階段 (0.9996ms)
+✔ 報告入口保留公開操作並組入頁面建立器 (0.8976ms)
+✔ 頁面建立器保留完整報告各區塊 (0.2158ms)
+✔ 報告入口與頁面建立器套用統一排版後仍維持可掌握大小 (2.3124ms)
+✔ report-actions: pre-paginate page structure is in place (1.2643ms)
+✔ report-actions: footer text contract (0.9757ms)
+✔ report-actions: sensitivity warning branches (0.2459ms)
+✔ report-actions: legacy broken pagination removed (0.2106ms)
+✔ report-actions: page builders enumerate every report section (0.1768ms)
+✔ report-actions: deadline report separates legal appeal and internal reminders (1.9138ms)
+✔ report-actions: print cleanup uses afterprint not hardcoded timer (0.1867ms)
+✔ report-actions: pdf attachment selection picks newest redacted version (0.1842ms)
+✔ report-actions: page count estimation removed (bloat) (0.2082ms)
+✔ report-actions: pdf render scale honors UI value linearly (0.287ms)
+✔ integration: _composeReportHtml emits N pages with correct page numbers (1857.9413ms)
+✔ integration: footer warning switches by report kind (36.6453ms)
+✔ integration: report kind label appears in header (17.2499ms)
+✔ integration: footer date is generated date, not arbitrary (9.2601ms)
+✔ integration: empty pageBodies still produces a valid single-page report (8.8937ms)
+✔ integration: attachments interleave directly after their parent event (8.8644ms)
+✔ T1: full report event detail escapes malicious imported event fields (14.2204ms)
+✔ T1: composed print report escapes title and skipped attachment rows (11.5316ms)
+✔ doc check section iterates every timeline node, not just kinds with REQUIRED_DOCS (0.1639ms)
+✔ event detail body includes kind-specific input fields (0.7326ms)
+✔ _orderedEventsLikeTimeline sorts events the same way render.js timeline does (30.6787ms)
+✔ _orderedEventsLikeTimeline places chronicle insert around anchored legal node (17.4588ms)
+✔ _orderedEventsLikeTimeline handles empty / null cases (9.3662ms)
+✔ report timeline section interleaves pending events at their suggestedDate (0.1223ms)
+✔ integration: html structure is well-formed (basic checks) (7.1296ms)
+Warning: Cannot load "@napi-rs/canvas" package: "Error: Cannot find module '@napi-rs/canvas'
+Require stack:
+- H:\Users\Fehu-play\Desktop\性平案件管理工具\libs\pdfjs\pdf.min.mjs".
+Warning: Cannot polyfill `DOMMatrix`, rendering may be broken.
+Warning: Cannot polyfill `Path2D`, rendering may be broken.
+✔ 實際 PDF 依需求取段，讀取首頁不需要下載內嵌的大附件 (449.8537ms)
+✔ 附件不存在時回傳 null，不建立 PDF 載入工作 (1.0489ms)
+✔ 未內嵌中文字碼的 PDF 使用隨附 CNS 字碼表還原中文 (76.0842ms)
+✔ 分段讀取失敗保留原始原因並銷毀 PDF 工作 (1.725ms)
+✔ 跨段取消後不再讀取下一段，停止 PDF 工作 (1.2029ms)
+✔ 回傳資料長度錯誤不能被 PDF 當成完整資料 (0.8825ms)
+✔ PDF 渲染途中取消，停止後續頁面並釋放當頁畫布 (6.1966ms)
+✔ PDF 異常頁面在建立畫布前拒絕，仍釋放文件 (2.5123ms)
+✔ 報告累計圖片達上限時拒絕新附件，保留先前圖片的計量 (2.3933ms)
+✔ 列印完成只回收該份報告的圖片，不清除稍後產生的附件 (1.0996ms)
+✔ 一百頁依序釋放畫布與頁面，完成後才交還圖片給報告 (4.5164ms)
+✔ PDF page 失敗仍釋放文件、畫布及本次圖片，保留其他附件 (1.2226ms)
+✔ PDF render 失敗仍釋放文件、畫布及本次圖片，保留其他附件 (1.1805ms)
+✔ PDF encode 失敗仍釋放文件、畫布及本次圖片，保留其他附件 (1.0826ms)
+✔ PDF 載入失敗等候 loading task 釋放；清理錯誤不覆蓋原本原因 (2.8303ms)
+✔ convertToCase 預填帶入全部當事人身分欄位（防跨模組漂移） (1.5674ms)
+✔ normalizeReportTracking 與 convertToCase 的身分欄位集一致 (1.2681ms)
+✔ report-tracking convertToCase wires sourceReportTrackingId into prefill (4.7784ms)
+✔ case-actions openCaseModal captures sourceReportTrackingId then clears prefill (0.9385ms)
+✔ case-actions saveCase writes sourceReportTrackingId onto case and calls markConverted (0.8074ms)
+✔ case-actions saveCase creates reportSocial event from converted report tracking prefill (1.6148ms)
+✔ markConverted sets status=converted and persists to Tauri templates (2.279ms)
+✔ cancelling case modal then opening a fresh one resets sourceReportTrackingId (0.5218ms)
+✔ ReportTrackingRepository stores, lists, and marks converted records (4.6614ms)
+✔ ReportTrackingRepository supports no-case closure and follow-up fields (1.589ms)
+✔ convertToCase prepares case modal prefill from report tracking (4.1873ms)
+✔ report tracking UI exposes follow-up lifecycle controls and closed rows cannot convert (2.5431ms)
+✔ report tracking filter defaults to all and supports every lifecycle status (1.8607ms)
+✔ report tracking filter rejects unknown values and returns to all (1.0211ms)
+✔ report tracking UI includes default-all filters and a read-only view action (1.6715ms)
+✔ case modal school safety report only exposes done and pending states (2.287ms)
+✔ document template context exposes school safety report number (25.352ms)
+✔ WorkspaceRepository.replace preserves non-case top-level HTML data (24.0349ms)
+✔ WorkspaceRepository.replace fills missing top-level buckets from sample data (10.1893ms)
+✔ EventRepository 子集合寫入在唯讀模式下會被阻擋 (21.6268ms)
+✔ EventRepository 刪除訪談會議時會一併移除所屬訪談稿節點 (14.2085ms)
+✔ ArchivePackageRepository 子集合寫入在唯讀模式下會被阻擋 (19.4381ms)
+✔ BulkExportPackageRepository 子集合寫入在唯讀模式下會被阻擋 (12.1202ms)
+✔ PersonRepository 與 AttachmentRepository 的 State.data 寫入也接上同一守門 (11.8759ms)
+✔ _assertRepoWritable helper 存在且檢查 _writeBlocked (0.9577ms)
+✔ WorkspaceRepository 寫入入口全部接上守門 (0.1566ms)
+✔ CaseRepository 寫入入口全部接上守門 (0.154ms)
+✔ 子集合 Repository 寫入入口全部接上守門 (1.0421ms)
+✔ 讀取路徑不被守門影響（load / list / get 不能呼叫 _assertRepoWritable） (0.3608ms)
+✔ investigation rule 必須在 basis 與 source 引用 105 函釋字號 (4.6499ms)
+✔ RULES 區段檔頭必須保留「起算日設計原則」註解（鞏固設計意圖） (1.8306ms)
+✔ appeal30 使用送達日；transferNotify30 使用知悉轉出日 (1.6036ms)
+✔ investigation / decision 等內部公文書類不得設定 triggerDateField（B-4 後 rejectAppeal20 改列送達類） (2.7964ms)
+✔ 新欄位必須同時進入 Rust 與 JS 的 case 白名單 (1.0242ms)
+✔ normalizeCase 對舊案件的 schoolScope 一律視為他校，不猜成本校 (0.1543ms)
+✔ 本校校名與 Logo 分開儲存 (0.3832ms)
+✔ 本校設定畫面同時提供 Logo 與校名 (0.2726ms)
+✔ 本校／他校為橫置撥動開關，與校名輸入框等高並排 (1.5325ms)
+✔ 開啟建立案件時就要設好本校／他校，不能等使用者點過才正確 (0.1436ms)
+✔ 管轄學校改為本校／他校，且他校才出現輸入框 (1.0701ms)
+✔ 選本校但尚未設定校名時必須擋下儲存並說明去哪裡設定 (0.1548ms)
+✔ 案件來源與承辦人排在同一行 (0.2033ms)
+✔ 承辦人欄位提供交接入口，並在換過人時列出歷任 (0.2575ms)
+✔ 同名時在輸入當下就提示，而不是等送出才擋 (0.3326ms)
+✔ 交接視窗具備四項必要輸入：新承辦人、日期、節點歸屬、選填備註 (0.4166ms)
+✔ 交接後只重繪受影響的區塊，不得整頁重畫 (0.2737ms)
+✔ 交接會同步更新 c.officer，維持既有讀取端可用 (0.3353ms)
+✔ 通報追蹤的學校／單位同樣採本校／他校，且與案件共用一套規則 (0.6436ms)
+✔ 通報追蹤的顯示同樣由 CSS 決定，不得再用 JS 切 hidden (1.2453ms)
+✔ schoolScope 必須進入 reportTracking 的參考白名單 (0.1289ms)
+✔ 索引不保存第二份完整實體，只留識別與導航所需欄位 (2.5963ms)
+✔ 同名不同 ID 的當事人都能被找到，且各自帶正確案件 (13.2962ms)
+✔ 全形英數與全形空白視同半形 (0.4121ms)
+✔ 大小寫與前後多餘空白不影響結果 (0.2377ms)
+✔ 案件代碼片段可命中 (0.4046ms)
+✔ 可搜到節點、附件檔名、日常任務與文件標題 (0.2972ms)
+✔ 每筆結果都帶可前往的 route，且案件類結果指向正確案件 (0.1904ms)
+✔ label 命中排在描述命中之前 (0.2723ms)
+✔ 命中片段會標出為什麼這筆被找到 (0.4824ms)
+✔ 刪除案件後索引不得再導向該案件 (0.3172ms)
+✔ 空白查詢回傳空結果，不得回傳全部 (0.1598ms)
+✔ 篩選支援結果類型與案件 (0.1488ms)
+✔ 分組永遠涵蓋全部類型鍵，UI 不需再處理缺鍵 (0.1886ms)
+✔ 建立索引不得改動來源資料 (0.3824ms)
+✔ 1000 案規模下查詢時間仍遠低於 100ms 門檻 (22.2328ms)
+✔ isTerm：vacation 為 false、一般學期為 true、缺值安全 (1.7116ms)
+✔ annual-report / data-health 已改用 SemesterRepository（不再 inline type !== vacation） (1.8551ms)
+✔ sidebar and toolbar fixed actions use delegated data-action handlers (2.3444ms)
+✔ DomActions supports delegated sidebar and toolbar commands (0.2093ms)
+✔ timeline render actions use delegated data-action handlers (0.5335ms)
+✔ daily work actions use delegated data-action handlers (2.8533ms)
+✔ F10-DOC-002：簡化程序完整紀錄可產生真正 DOCX 並包含 A4 主文件 (42.2781ms)
+✔ F10-UI-001：簡化程序工作區提供 A4 與 DOCX 完整程序紀錄入口 (10.041ms)
+✔ F07-UI-002：簡化程序視窗離開前會檢查未儲存輸入 (2.1858ms)
+✔ F05-DATA-001：未指定調查方式時使用目前預設值，不讀取節點舊欄位 (1.2221ms)
+✔ F06-RULE-001：適用條件有 pending 或 unmet 時不得進入簡化程序 (1.0309ms)
+✔ F06-RULE-002：五項條件全部符合後才可明確選擇簡化程序並留下歷程 (3.3792ms)
+✔ F07-DATA-001：逐人陳述分開保存，完成前必須有原始陳述 (4.2744ms)
+✔ F08-DATA-001：送審建立不可變報告版本，退回補正不刪除原版本 (1.5637ms)
+✔ F08-RULE-001：報告區段或必要當事人陳述未完成時不可送審 (0.6672ms)
+✔ F09-RULE-001：非學生行為人或程序旗標會阻擋簡化報告完成 (0.2736ms)
+✔ 教職員工行為人依法只能進入調查小組，教職員被害人不會觸發同一強制 (0.481ms)
+✔ F09-DATA-001：轉回調查小組保留簡化內容、原期限脈絡且重複執行不建第二套節點 (0.9341ms)
+✔ F05-DATA-002：未來版本或未知欄位不會讓同案同時出現兩個主要路徑 (0.2447ms)
+✔ F09-RULE-002：簡化程序不得繞過轉換流程直接改成其他主要路徑 (0.3509ms)
+✔ F08-RULE-002：已送審或已審議版本不能重複送審、重複審議或覆寫 (0.8237ms)
+✔ F10-DOC-001：完整程序文件模型保留逐人問答、附件、報告版本、審議、轉換與期限 (1.2765ms)
+✔ L6: source test references point to existing test files (47.2583ms)
+✔ L6: JS comments that claim test locks name a concrete test file (55.6003ms)
+✔ L6: npm check runs the guarded full test runner before lint and format checks (0.9962ms)
+✔ T2 startup benchmark script emits full hydrate and snapshot metrics (120.0822ms)
+✔ StartupFlow 以具名步驟表示啟動順序 (3.5452ms)
+✔ StartupFlow 關鍵順序保持：工作區 -> SQLite -> 授權 -> 畫面還原 (0.439ms)
+✔ 啟動流程不再包含試用額度與超額唯讀步驟 (0.2426ms)
+✔ 非關鍵步驟只記錄錯誤，關鍵步驟會重新拋出 (9.6363ms)
+✔ module manifest 宣告 StartupFlow exports (0.2453ms)
+✔ GUARD-006 FAIL-2：舊快取顯示後，最新 SQLite 資料完成同步前不得開放寫入 (9.9759ms)
+✔ GUARD-006 FAIL-2：啟動同步失敗時維持禁止寫入，重試成功後才解除 (2.4832ms)
+✔ DATA-203：年度行事曆 hydrate 失敗時不得先解除寫入鎖 (1.4784ms)
+✔ 啟動讀取失敗後切換工作區：empty (1.197ms)
+✔ 啟動讀取失敗後切換工作區：pending (1.0934ms)
+✔ 啟動讀取失敗後切換工作區：draft (0.8633ms)
+✔ about and feature manual static modal actions use delegated handlers (2.9779ms)
+✔ about modal displays the author contact information (2.2648ms)
+✔ production build disables console brand banner by default (3.801ms)
+✔ startup uses ui-ready event instead of fixed storage warning timeout (1.6594ms)
+✔ UI exposes unified handleError entry point (3.6647ms)
+✔ hidden 屬性必須勝過任何元件的 display 規則 (1.0767ms)
+✔ hidden 規則必須在元件 CSS 之前，且不得被後續規則抵銷 (0.1642ms)
+✔ index.html 中所有 hidden 元素都不得改用 class 隱藏 (2.208ms)
+✔ 狀態列展開時，標題列的訊息不得同時出現在下方清單 (140.5613ms)
+✔ 最高優先狀態改變時，標記必須跟著移動而不是累積 (25.0462ms)
+✔ CSS 只在展開狀態隱藏來源列，收合時不得誤傷 (0.2349ms)
+✔ Actions 新增 openStorageGuidanceModal / bulkDeleteClosedCases / _closedCaseAgeBuckets (1.8608ms)
+✔ bulkDeleteClosedCases 走 assertWritable + flushPendingTauriSave + requireAck + requireText 強保護 (0.2152ms)
+✔ bulkDeleteClosedCases Tauri 環境會一次刪除整批，再更新畫面資料 (0.1557ms)
+✔ checkStorageHealth 不再使用瀏覽器 quota 或自動觸發刪除引導 (1.8692ms)
+✔ T4: openStorageGuidanceModal 觸發 exportState 路徑（confirm=true） (2.766ms)
+✔ T4: openStorageGuidanceModal cancel 不會觸發 exportState (1.2733ms)
+✔ T4: bulkDeleteClosedCases 對符合條件案件整批刪除成功後才更新畫面資料 (3.1487ms)
+✔ T4: bulkDeleteClosedCases 整批刪除失敗時保留所有畫面資料 (1.2984ms)
+✔ T4: bulkDeleteClosedCases 無符合案件時 toast info 並回傳 removed=0 (1.2886ms)
+✔ T4: bulkDeleteClosedCases assertWritable=false 時直接 return null (1.152ms)
+✔ #36: clearStartupCache 在 Tauri ready 時確認後清除 graph snapshot (1.193ms)
+✔ #36: clearStartupCache 在工作區未連接時提示且不開確認 (0.9969ms)
+✔ _closedCaseAgeBuckets 對已結案案件依 6m / 12m / 24m 分齡 (1.1291ms)
+✔ measureStorageUsage only reports the SQLite workspace source (21.0464ms)
+✔ maybeRecheckStorageHealth 5 分鐘內只刷新一次 SQLite 狀態 (10.0485ms)
+✔ state-persistence exports the SQLite status helpers and save success rechecks status (1.0766ms)
+✔ L1: every app js file starts with strict mode directive (35.9189ms)
+✔ N2 step 2：style.css 檔頭有 TOC 區塊 (0.8931ms)
+✔ N2 step 2：§1..§12 標頭依序出現 (0.1874ms)
+✔ N2 step 2：utility class 仍在 §12 區段 (0.4394ms)
+✔ N2 step 2：style.css 內容量合理（防止無意間切檔或內容大量流失） (0.1205ms)
+✔ TauriCommandContract 與 Rust generate_handler! 註冊清單完全一致 (1.6072ms)
+✔ createTauriDataStoreAdapter 實際發出的 command 都在契約清冊內 (1.2324ms)
+✔ #36 loadWorkspaceGraph passes optional since payload to Tauri command (3.1331ms)
+✔ QA-201：E2E WebDriver 只存在 feature 隔離執行檔，正式版不會註冊 (1.4473ms)
+✔ QA-201：E2E 執行檔缺少隔離資料目錄時拒絕退回正式 AppData (0.6271ms)
+✔ QA-201：虛構案件略過設備授權只能編入 E2E feature (1.4786ms)
+✔ QA-201：正式版不得編入任何 E2E 授權放行分支 (0.7303ms)
+✔ BLK-201：E2E 失敗必須留下可診斷紀錄與早於 mocha 的 WebDriver 逾時 (1.3929ms)
+✔ QA-201：E2E 案件 fixture 只能使用 graph v5 允許的案件欄位 (3.2557ms)
+✔ QA-201：E2E 建置不得把測試外掛 ACL 留在版控的正式版產生檔中 (2.7785ms)
+✔ DATA-003～005：預檢、canonical graph、交易提交、full hydrate 順序固定 (3.0473ms)
+✔ DATA-002：前端預檢失敗時不得建立 graph、進 Rust 或寫入 (6.1217ms)
+✔ DATA-002：Rust 目標／容量預檢阻擋時不得確認或提交 (1.038ms)
+✔ DATA-004：使用者取消後不提交也不重載 (0.8683ms)
+✔ DATA-004：staging／提交失敗時標示工作區未變更且不得重載 (0.865ms)
+✔ DATA-005：提交後 hydrate 失敗不得誤稱工作區未變更 (0.7925ms)
+[TauriRepository] write-through failed Error: SQLite 連線缺少整案儲存功能，已拒絕拆開寫入
+    at writeCaseGraph (tauri-repository.js:481:15)
+    at Object.flushPendingSave (tauri-repository.js:568:25)
+✔ TauriRepository refuses split writes when atomic case save is unavailable (10.346ms)
+✔ TauriRepository queues save and flushes it on demand (2.6888ms)
+[TauriRepository] hydration from graph snapshot done; cases=1
+✔ TauriRepository debounce writes only the latest queued case state (274.5376ms)
+✔ TauriRepository keeps separate immutable snapshots when the user switches cases before debounce (2.3378ms)
+✔ TauriRepository hydrate prefers batch workspace graph over N+1 calls (3.3508ms)
+✔ DATA-001：TauriRepository 對版本化 graph 使用 canonical contract hydrate (2.8299ms)
+✔ #36 hydrate forwards since option to batch workspace graph API (2.3337ms)
+✔ TauriRepository hydrate fails explicitly when batch graph API is missing (1.3634ms)
+✔ #36 phase 4 applyIncrementalGraph upserts case/event/person/delivery/investigator in place (2.2608ms)
+✔ #36 phase 4 applyIncrementalGraph applies deletions and resets currentCaseId (1.6868ms)
+✔ #36 phase 4 applyIncrementalGraph merges templates by scope and holidays by date (13.8059ms)
+✔ #36 phase 4 refreshIncremental passes since and keeps a non-decreasing query boundary (2.8719ms)
+[TauriRepository] hydrating from SQLite...
+[TauriRepository] hydration done; cases=1
+✔ #36／FIX-017 snapshot 可先顯示，但最新資料同步完成前保持禁止寫入 (11.939ms)
+✔ #36 snapshot bootstrap ignores stale cache and persists full hydrate result (2.4272ms)
+✔ DATA-005 reloadAfterExternalMutation discards old debounce and forces full graph hydrate (264.1439ms)
+✔ workspace change preparation blocks any active attachment draft without deleting it (2.3756ms)
+✔ #37 retired hydrate no longer calls listEvents/persons/deliveries/investigators fallback chain (0.5394ms)
+✔ tauri-runtime defines persistTauriReference / removeTauriReference (6.6601ms)
+✔ ExpertRepository: upsert path persists to Tauri templates with scope='expert' (2.1213ms)
+✔ ExpertRepository: remove path calls removeTauriReference (2.0016ms)
+✔ ExpertRepository: no longer uses obsolete inline adapter.templates pattern (1.9011ms)
+✔ SemesterRepository: upsert path persists to Tauri templates with scope='semester' (1.9197ms)
+✔ SemesterRepository: remove path calls removeTauriReference (1.3755ms)
+✔ SemesterRepository: no longer uses obsolete inline adapter.templates pattern (1.6335ms)
+✔ DailyTaskRepository: upsert path persists to Tauri templates with scope='dailyTask' (1.7131ms)
+✔ DailyTaskRepository: remove path calls removeTauriReference (1.8006ms)
+✔ DailyTaskRepository: no longer uses obsolete inline adapter.templates pattern (1.6925ms)
+✔ CommitteeMemberRepository: upsert path persists to Tauri templates with scope='committeeMember' (1.5107ms)
+✔ CommitteeMemberRepository: remove path calls removeTauriReference (1.5056ms)
+✔ CommitteeMemberRepository: no longer uses obsolete inline adapter.templates pattern (1.2597ms)
+✔ TaskTemplateRepository: upsert path persists to Tauri templates with scope='taskTemplate' (1.3906ms)
+✔ TaskTemplateRepository: remove path calls removeTauriReference (1.4634ms)
+✔ TaskTemplateRepository: no longer uses obsolete inline adapter.templates pattern (1.6274ms)
+✔ ReportTrackingRepository: upsert path persists to Tauri templates with scope='reportTracking' (1.3045ms)
+✔ ReportTrackingRepository: remove path calls removeTauriReference (4.3163ms)
+✔ ReportTrackingRepository: no longer uses obsolete inline adapter.templates pattern (1.5758ms)
+✔ workspace graph contract scopes match what repos write (no orphan scopes) (3.32ms)
+✔ integration: TauriRepository not ready is an observable persistence failure (4.1087ms)
+✔ integration: helper queues and flushes adapter template writes when Tauri ready (2.5378ms)
+✔ integration: adapter rejection stays pending and a later flush retries it (4.2341ms)
+✔ integration: failed reference batch is removed after caller rollback and is not retried invisibly (3.0837ms)
+✔ integration: reference operation from an old workspace generation cannot write into the new workspace (2.6818ms)
+✔ P2-2：tauri-repository.js 檔頭有 TOC + 寫穿透策略說明 (0.8075ms)
+✔ P2-2：§1..§7 區段標頭依序出現 (0.1987ms)
+✔ P2-2：對外 API 仍存在 (0.1832ms)
+✔ P2-2：不得重新加入瀏覽器儲存遷移或降級 API (1.0264ms)
+✔ P2-2：Repository 僅建立一份全域介面 (0.2107ms)
+✔ Tauri 工作區切換後重新載入 SQLite 資料並更新畫面 (1.0409ms)
+✔ Tauri 工作區切換前會先排空待寫入與同步工作 (0.4364ms)
+✔ 尚未載入工作區時可略過排空，但必須是已知載入狀態且佇列為空 (0.1534ms)
+✔ 工作區切換不會默默刪除開啟中的表單，成功後才清除舊草稿 (0.1838ms)
+✔ hasStaffRespondent：行為人為教職員時為真 (37.5669ms)
+✔ 行為人含教職員＋已有知悉事件 → 立即建立停聘回報節點 (15.9678ms)
+✔ 行為人非教職員 → 不建立移送教評會節點 (10.8675ms)
+✔ 移交尚未回報也會建立停聘節點，避免只顯示無按鈕的期限卡片 (11.2418ms)
+✔ 尚無知悉事件時不提前建立停聘節點 (14.962ms)
+✔ 檢核項「是否移送教評會」僅在行為人含教職員時適用 (20.6413ms)
+✔ teacherEvalReferral 在四表對齊內（EVENT_KINDS/REQUIRED_DOCS/DECISION_OPTIONS） (9.8072ms)
+✔ teacherEvalReferral 是一般事件節點，時間軸提供回報完成按鈕 (32.1537ms)
+✔ 兩段式：調查前（teacherEvalReferral）一個月 rule，調查後（teacherEvalReferral2）議處節點 (11.0203ms)
+✔ 調查結束（investigationCompleted 已回報）→ 建立第二個教評會節點（教職員行為人） (10.5152ms)
+✔ 教評會決議不停聘 → 依性平法§25 建立保護措施檢討節點 (30.2753ms)
+✔ V1-TPL-001：AI 預檢與寫入分離，合法內容只建立 AI 草稿及匯入帳本 (18.0334ms)
+✔ V1-TPL-001：相同內容重匯辨識為重複，不建立第二版本 (14.08ms)
+✔ V1-TPL-001：不同內容建立下一個 AI 草稿版本，不覆寫既有版本 (10.1192ms)
+✔ V1-TPL-001：只有主秘可發布，且已發布版本不可原地修改 (28.0283ms)
+✔ V1-TPL-001：整包中任一候選遭竄改時 commit 不得部分寫入 (8.5131ms)
+✔ V1-DATA-001：桌面交易式寫入失敗時 AI 匯入回復記憶體集合 (8.8215ms)
+✔ auto 主題的深色宣告一律包在 prefers-color-scheme 內 (7.468ms)
+✔ dark 專屬的 token block 不得再與 auto 共用選擇器 (0.4327ms)
+✔ auto 在深色系統下的 token 必須與 dark 完全相同——涵蓋且等值 (7.1163ms)
+✔ auto 在淺色系統下不得殘留任何深色 token (4.0851ms)
+✔ 不得為淺色系統另外定義一份 auto token (3.3706ms)
+✔ hydrate 前的預設主題必須與 initTheme() 的預設一致 (1.9918ms)
+✔ auto 的即時跟隨由 CSS media query 提供，JS 不需重複實作 (0.506ms)
+✔ THRESHOLDS 物件必須存在且 4 個關鍵 key 數值正確 (4.0629ms)
+✔ THRESHOLDS_DEFAULTS 必須 Object.freeze（預設值不得 runtime 漂移） (2.0018ms)
+✔ sanitizeThresholds 對非數值與超界值能正確 clamp / 還原預設 (3.1558ms)
+✔ applyThresholdsOverrides 寫入 window.THRESHOLDS 而非取代物件參考 (1.812ms)
+✔ deadline.js 不得再寫死 `< 6` 與 `<= 14`（urgentHours/dueSoonDays） (0.597ms)
+✔ FIX-012：申復期限不得使用天數門檻自動推定未申復 (0.7601ms)
+✔ FIX-014：完成案件分組必須依資料完整度判定 (1.1436ms)
+✔ index.html 拆出學生轉學／轉服務／未指定三組轉出提示區塊 (1.148ms)
+✔ 通知日 hint 也分學生／轉服務／未指定三組，且 label 帶 id 以便分流改寫 (0.2899ms)
+✔ dom-actions.js 路由 transfer-type.change → Actions.refreshTransferMode() (0.1647ms)
+✔ refreshTransferMode 依 type 切換顯示與標題；service 不顯示 1 個月期限文案 (1.6864ms)
+✔ toggleKindSpecificFields kind="transferOut" 會呼叫 refreshTransferMode (3.2381ms)
+✔ 輸入試用序號時要先跳出說明並取得確認，才會啟用 (2.9314ms)
+✔ 試用說明按取消就不得寫入任何授權 (2.2296ms)
+✔ 試用中輸入正式認證碼：先確認清除後果，確認之後才寫入認證碼 (1.4057ms)
+✔ 試用中輸入正式認證碼但按取消：不得寫入認證碼，也不得刪任何資料 (0.8949ms)
+✔ 清除只刪 Rust 端登記的那一件案件，且刪完才移除試用紀錄 (0.9904ms)
+✔ 沒有試用紀錄時輸入正式認證碼不得跳清除警告 (0.8567ms)
+✔ 上次清除沒做完，下次啟動要接續而不是留下使用者以為已刪的資料 (0.9313ms)
+✔ 沒有待清除旗標時不得刪任何東西 (0.7558ms)
+✔ 試用額度用完的說明要與「從未授權」分開，否則試用者會以為工具壞了 (0.9291ms)
+✔ 額度未用完時試用狀態視為可新增案件 (0.7411ms)
+✔ 移除前端分開登記額度的入口，案件儲存交由後端完成 (0.2905ms)
+✔ 試用案件仍待儲存時先阻擋新增，避免累積未提交案件 (0.7084ms)
+✔ 前端判斷用的試用序號前綴必須與 Rust 一致 (0.1612ms)
+✔ 試用紀錄讀取失敗時顯示原因並禁止新增，不啟用或清除試用 (0.756ms)
+✔ 額度上限只有一個出處，且就是一件 (0.0868ms)
+✔ 試用紀錄放在應用程式資料夾，不在工作區——刪掉工作區不得讓額度回復 (0.1265ms)
+✔ 重覆輸入試用序號不得把用掉的額度還回來 (0.1484ms)
+✔ 已升級為正式授權後不得退回試用 (0.0939ms)
+✔ 額度用完時 Rust 端就擋下新增案件，不只靠前端 (0.0811ms)
+✔ install_license 只標記待清除，不自己刪資料 (0.108ms)
+✔ 新指令有登記在 Tauri 契約與 adapter 上 (0.4386ms)
+✔ 啟動流程會接續未完成的試用清除 (0.1125ms)
+✔ 後端拒絕跨工作區清理時，畫面案件與待清理紀錄都保留 (0.7654ms)
+✔ U1: status bar has one main summary and collapsible details (7.8507ms)
+✔ U2: all dialogs ignore backdrop clicks and Escape (0.4017ms)
+✔ U3: confirm dialog has stable animation hooks (2.9819ms)
+✔ M11: caseList can update active case in place without rebuilding HTML (3.0119ms)
+✔ U4: warning timeline nodes use amber warn class instead of pending or danger styling (3.4615ms)
+✔ U6: delivery rows are CSS-managed and stack on narrow screens (3.3524ms)
+✔ U8: small viewport and short-height responsive rules exist (0.5668ms)
+✔ U5: diag-bootstrap.js has copy-error button with clipboard API (1.718ms)
+✔ U5: diag-bootstrap.js shows Chinese user guidance for error banner (0.2012ms)
+✔ U5: copy button shows "已複製" feedback then resets (0.1901ms)
+✔ M10: ui.js confirm uses window.esc with inline shim fallback (0.1665ms)
+✔ M10: ui.js confirm escBody helper exists and replaces \n with <br> (0.1822ms)
+✔ M10: ui.js confirm no longer chains .replace(/&/g,...).replace(/</g,...) for body (0.1634ms)
+✔ U7: :root declares 5 surface intent token pairs (0.887ms)
+✔ U7: :root[data-theme="dark"] overrides surface tokens to rgba dark values (0.8033ms)
+✔ U7: pill / cs-chip / check-mark / draft-banner / attach.missing / confirm-head.danger use surface tokens (not hardcoded colors) (17.0794ms)
+✔ U7: dark-mode override block no longer contains per-component pill / cs-chip / check-mark overrides (1.0588ms)
+✔ index.html 的 data-action 種類數在拆分前後必須一致 (2.1402ms)
+✔ 模組數量與載入順序必須與 index.html 完全對應 (0.9307ms)
+✔ 每個模組宣告的匯出都必須實際掛上全域 (41.1347ms)
+✔ 靜態容器 id 不得在拆 HTML 時消失 (0.7619ms)
+✔ 每個 modal 都有可關閉的入口 (2.191ms)
+✔ 主題 token 覆寫完整性在拆 CSS 前後必須維持 (0.3219ms)
+✔ 拆分目標的現況規模記錄在案，供拆分後比對 (1.5633ms)
+✔ UI.badge 共用 helper 已定義（badge sm + data-intent + marginLeft） (0.7584ms)
+✔ report-tracking 已改用 UI.badge、不再自拼 badge 或保留 _badge (0.2363ms)
+✔ guardAction prevents duplicate in-flight actions and restores button state (3.2142ms)
+✔ P2-2：ui.js 檔頭有 TOC + 命名規則說明 (0.8828ms)
+✔ P2-2：§1..§10 區段標頭依序出現 (0.9386ms)
+✔ P2-2：對外 API 仍存在於 window.UI (0.2398ms)
+✔ P2-2：ui.js 行數在合理範圍（防意外切檔或內容流失） (0.2115ms)
+✔ ATT-001：DOC/DOCX 共用驗證、MIME 與原生 picker 白名單 (1.797ms)
+✔ ATT-001：案件與日常 HTML picker 使用同一 accept 契約並明示 Word 無內建預覽 (8.2214ms)
+✔ ATT-001：案件 Tauri picker 可選 DOCX 並以正確 MIME 走原生路徑保存 (3.42ms)
+✔ ATT-001：日常任務 Tauri picker 與案件共用 Word 白名單並保存到 dailyTask owner (2.561ms)
+✔ PERF-001：長期資料基準涵蓋案件、事件、附件索引與備份 manifest hash (126.6342ms)
+✔ bootstrap 每次採用工作區都必須前進工作區世代 (0.9252ms)
+✔ flushPendingSave 仍以世代比對拒絕舊工作區的待寫入快照 (0.2063ms)
+✔ reloadAfterExternalMutation 與 bootstrap 都會前進世代 (0.146ms)
+✔ 舊版案件用途與特教標記可載入並以現行格式往返，原輸入保持不變 (10.5336ms)
+✔ 舊 logical state 儲存時保留用途原值，且不修改來源案件 (3.1501ms)
+✔ 舊欄位處理不得吞掉未知欄位、異常用途值或衝突的歷史資料 (1.7083ms)
+✔ 舊欄位處理可重複執行而不改變既有歷史標記 (1.2091ms)
+✔ 目前 workspace graph fixture 符合唯一現行契約 (0.3951ms)
+✔ hydrate 以正規化欄位與子表覆蓋 raw_json 的非權威欄位 (0.4607ms)
+✔ 費用與現行 reference 的契約欄位完整保留 (0.45ms)
+✔ 目前 graph 可往返所有模板治理與統整集合 (0.5067ms)
+✔ logical state 轉 flat graph 時不在 raw_json 保存權威子集合 (0.8216ms)
+✔ 舊版、別名欄位、重複 id、斷裂關聯與巢狀權威子集合一律拒絕 (1.7749ms)
+✔ 必要 collection 或案件調查路線欄位缺失時不得 hydrate (0.6218ms)
+✔ 傳輸外殼、reference scope 與假日欄位只接受 allowlist (1.467ms)
+✔ 案件、人員、事件、子表與 reference raw_json 只接受目前欄位白名單 (1.2431ms)
+✔ 外來 graph 拒絕 stored HTML 與可執行 dispatcher，AI 匯入決策只接受固定 enum (0.7721ms)
+✔ CaseRepository.touch only updates the explicitly selected case metadata (1.0042ms)
+✔ SQLite-only: pre-bootstrap WorkspaceRepository.save refuses memory-only persistence (0.2607ms)
+✔ SQLite-only: bootstrap installs write-through save and flush methods (0.1732ms)
+✔ Workspace replace no longer carries an unused dirty-case side channel and render cache remains available (0.9261ms)
+✔ 案件 touch 立即把明確案件快照交給唯一的 Tauri debounce 佇列 (0.1963ms)
+✔ 切案前後的 touch 各自傳送正確案件，不會在稍後重讀 currentCaseId (2.9769ms)
+✔ PersistenceCoordinator.flushAll waits for cases, references, and settings (3.8346ms)
+✔ 較舊 ACK 不得覆蓋較新的 pending revision (1.534ms)
+✔ 舊版用途標記通過完整附件預檢，原始移轉包不被改寫 (9.852ms)
+✔ 目前完整工作區移轉包通過結構、關聯、附件、hash、counts 與空間估算 (1.0365ms)
+✔ 預檢不得修改輸入包或全域狀態 (0.7625ms)
+✔ 只接受目前 packageType、packageVersion 與 manifest (2.5368ms)
+✔ 舊 state/settings、舊 graph 與舊 schema 都會明確拒絕 (1.3813ms)
+✔ graph 內重複 id、斷裂關聯與巢狀權威子集合會阻擋 (1.5611ms)
+✔ 附件 encoding、base64、size、sha256 與 refs 任一不一致即阻擋 (5.5553ms)
+✔ 缺少必要清單、附件遺失、counts 不符與空間不足都會阻擋 (1.5467ms)
+✔ canonicalGraph 只驗證並複製目前 graph，不做格式轉換 (0.5138ms)
+✔ 目前 graph 可完整還原 logical state 並保留契約欄位 (1.1526ms)
+✔ 單案移轉包必須且只能包含一案 (0.5813ms)
+✔ loadInitial only delegates to the SQLite WorkspaceRepository (1.865ms)
+✔ assertWritable blocks while SQLite is starting or failed (1.1467ms)
+✔ assertWritable allows writes after a successful SQLite hydrate (1.6355ms)
+✔ touch does not queue a save while SQLite writes are blocked (0.9849ms)
+✔ _persistNow refuses a repository that has not installed Tauri write-through (0.9319ms)
+ℹ tests 1483
+ℹ suites 0
+ℹ pass 1483
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18517.963
+Node 文件基線一致：1483 tests / 1483 pass / 0 fail / 0 skip
+
+> chashao-case-manager@1.7.1 lint
+> node scripts/check-tooling.mjs eslint --ext .js,.mjs js tests scripts
+
+
+> chashao-case-manager@1.7.1 format:check
+> node scripts/check-tooling.mjs prettier --check index.html style.css package.json wdio.conf.mjs .eslintrc.json .prettierrc.json "{js,scripts,tests,assets,src-tauri}/**/*.{js,mjs,cjs,json,html,css}"
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> chashao-case-manager@1.7.1 rust:fmt:check
+> node scripts/check-tooling.mjs --cwd src-tauri cargo fmt --check
+
+
+> chashao-case-manager@1.7.1 rust:test
+> node scripts/run-rust-tests.mjs
+
+
+running 3 tests
+test tests::request_contains_only_product_version_and_hashed_fingerprint ... ok
+test tests::issued_code_verifies_on_the_requested_device ... ok
+test tests::modified_field_wrong_key_other_device_and_truncated_signature_are_rejected ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `release` profile [optimized] target(s) in 0.18s
+     Running unittests src\lib.rs (../src-tauri/target\release\deps\chashao_license_core-39c6f6e22cbec3f9.exe)
+   Doc-tests chashao_license_core
+
+running 5 tests
+test issuer::tests::invalid_request_is_rejected_before_issuance ... ok
+test issuer::tests::school_and_official_email_are_required_before_issuance ... ok
+test issuer::tests::key_initialization_refuses_to_replace_an_existing_key ... ok
+test issuer::tests::obsolete_log_header_is_rejected_without_appending ... ok
+test issuer::tests::inspected_request_and_issued_license_keep_the_same_device ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+    Finished `release` profile [optimized] target(s) in 0.21s
+     Running unittests src\main.rs (../../src-tauri/target\release\deps\chashao_license_issuer-c1a3c8d2b17ad57a.exe)
+
+running 143 tests
+test close_coordinator_tests::cancelled_close_can_be_requested_again ... ok
+test close_coordinator_tests::close_waits_for_explicit_approval_and_blocks_repeated_requests ... ok
+test command_archive::tests::archive_job_cancellation_is_scoped_and_released ... ok
+test command_archive::tests::rejects_unsafe_duplicate_and_ambiguous_entries ... ok
+test command_archive::tests::cancellation_at_commit_boundary_preserves_old_file ... ok
+test command_app_settings::tests::sqlite_settings_round_trip_without_browser_storage ... ok
+test command_consolidation::tests::consolidation_rejects_attachment_references_in_proposed_graph ... ok
+test command_attachment_read::tests::bounded_reads_reject_workspace_version_and_range_changes ... ok
+test command_consolidation::tests::consolidation_rejects_document_content_in_proposed_graph ... ok
+test command_consolidation::tests::consolidation_rejects_existing_id_rebound_to_another_case ... ok
+test command_consolidation::tests::consolidation_rejects_v1_and_attachment_fields_before_backup ... ok
+test command_consolidation::tests::local_attachment_fields_follow_stable_ids_in_reordered_arrays ... ok
+test command_consolidation::tests::consolidation_aborts_when_attachment_parent_would_disappear ... ok
+test command_archive::tests::archive_roundtrip_and_failure_preserve_destination ... ok
+test command_consolidation::tests::consolidation_creates_full_backup_and_atomically_commits_graph ... ok
+test command_deletions::tests::database_failure_rolls_back_rows_records_and_files ... ok
+test command_deletions::tests::batch_attachment_deletion_is_atomic_and_requires_every_id ... ok
+test command_deletions::tests::batch_case_deletion_is_one_transaction ... ok
+test command_consolidation::tests::consolidation_swap_failure_restores_original_workspace ... ok
+test command_consolidation::tests::consolidation_preserves_attachment_rows_files_hashes_and_references ... ok
+test command_deletions::tests::event_deletion_removes_only_its_attachments ... ok
+test command_deletions::tests::failed_restore_preserves_staged_attachment_and_manifest ... ok
+test command_deletions::tests::file_move_failure_restores_everything ... ok
+test command_license::tests::corrupt_trial_record_blocks_license_commit_without_overwriting_either_file ... ok
+test command_license::tests::unconfigured_public_key_never_grants_access ... ok
+test command_license::tests::status_accepts_valid_code_and_rejects_other_device ... ok
+test command_migration::tests::preflight_accepts_complete_package_and_reports_deterministic_counts ... ok
+test command_migration::tests::preflight_accepts_current_single_case_package_type ... ok
+test command_migration::tests::preflight_exposes_unavailable_space_check_as_warning_not_false_success_claim ... ok
+test command_migration::tests::preflight_rejects_attachment_encoding_size_hash_and_ref_failures ... ok
+test command_migration::tests::preflight_rejects_duplicate_children_and_parent_mismatches ... ok
+test command_deletions::tests::startup_restores_files_when_database_was_not_committed ... ok
+test command_migration::tests::preflight_rejects_every_noncurrent_package_and_graph_version ... ok
+test command_migration::tests::preflight_rejects_invalid_base64_and_export_reported_missing_files ... ok
+test command_migration::tests::preflight_rejects_non_empty_target_and_insufficient_staging_space ... ok
+test command_deletions::tests::startup_finishes_cleanup_after_committed_interruption ... ok
+test command_migration::tests::command_preflight_is_read_only_for_database_and_attachment_area ... ok
+test command_migration_transactional::tests::invalid_package_graph_is_rejected_before_staging ... ok
+test command_deletions::tests::recovery_waits_for_an_active_deletion_before_deciding ... ok
+test command_deletions::tests::interview_deletion_cascades_to_transcripts_and_their_attachments ... ok
+test command_trial::tests::damaged_or_unreadable_trial_records_are_errors_and_never_become_fresh_trials ... ok
+test command_migration_transactional::tests::shared_complex_graph_fixture_round_trips_through_transactional_sqlite ... ok
+test command_trial::tests::prefix_check_is_only_a_hint ... ok
+test command_trial::tests::quota_reflects_case_usage ... ok
+test command_trial::tests::record_round_trips_through_json ... ok
+test command_trial::tests::trial_code_ignores_case_and_padding ... ok
+test command_trial::tests::trial_mutation_lock_excludes_other_handles_and_releases_on_drop ... ok
+test command_trial::tests::concurrent_workspaces_can_only_commit_one_trial_case ... ok
+test command_migration_transactional::tests::injected_commit_failure_restores_original_database_snapshot_and_cleans_temp ... ok
+test command_trial::tests::unknown_fields_are_rejected_so_format_changes_cannot_pass_silently ... ok
+test command_migration_transactional::tests::transactional_import_round_trips_graph_and_verified_attachment ... ok
+test command_trial::tests::trial_records_reject_inconsistent_usage_dates_versions_and_unknown_fields ... ok
+test command_trial::tests::failed_trial_save_releases_quota_and_rolls_back_case_and_receipt ... ok
+test command_trial::tests::unbound_trial_records_never_authorize_automatic_deletion ... ok
+test command_trial::tests::cleanup_rejects_other_workspaces_stale_requests_and_recreated_databases ... ok
+test command_trial::tests::used_trial_cannot_be_registered_again_or_rebound ... ok
+test command_workspace_backup::tests::backup_staging_is_revalidated_before_publish ... ok
+test command_workspace_backup::tests::full_backup_covers_graph_meta_case_and_daily_task_attachments ... ok
+test command_workspace_backup::tests::orphan_attachment_blocks_complete_backup_without_leaving_staging ... ok
+test db_tests::atomic_write_creates_target_and_cleans_staging ... ok
+test command_workspace_backup::tests::corrupted_backup_is_rejected_before_target_changes ... ok
+test command_workspace_backup::tests::future_backup_version_and_declared_count_drift_are_hard_fail ... ok
+test db_tests::attachment_commands_reject_absolute_index_path_without_mutating_anything ... ok
+test db_tests::attachment_commands_reject_parent_traversal_path ... ok
+test db_tests::attachment_save_and_package_import_reject_unsafe_generated_paths ... ok
+test db_tests::attachments_upsert_columns_stay_aligned ... ok
+test db_tests::audit_log_writes_and_reads ... ok
+test db_tests::attachment_ids_and_event_references_cannot_cross_cases ... ok
+test db_tests::attachment_ids_with_matching_suffix_do_not_overwrite_each_other ... ok
+test db_tests::cases_upsert_columns_stay_aligned ... ok
+test db_tests::case_attachment_folder_uses_human_readable_code ... ok
+test db_tests::case_upsert_persists_investigation_defaults ... ok
+test command_workspace_backup::tests::full_backup_restores_deletion_audit_and_holiday_import_history ... ok
+test db_tests::current_workspace_graph_shared_fixture_round_trips_without_field_loss ... ok
+test command_workspace_backup::tests::workspace_exclusive_lock_blocks_mutation_until_backup_finishes ... ok
+test db_tests::cleanup_orphan_attachments_scans_and_deletes_only_orphans ... ok
+test db_tests::clear_graph_snapshot_on_a_brand_new_workspace_reports_nothing_to_clear ... ok
+test db_tests::ensure_within_root_accepts_paths_whose_ancestors_do_not_exist_yet ... ok
+test db_tests::events_upsert_columns_stay_aligned ... ok
+test db_tests::ensure_within_root_blocks_escape ... ok
+test db_tests::delivery_overwrite_preserves_existing_file_when_target_is_locked ... ok
+test db_tests::holiday_calendar_commit_persists_state_workday_and_import_history_atomically ... ok
+test db_tests::import_attachment_uses_canonical_upsert_sql ... ok
+test db_tests::graph_snapshot_round_trip_and_clear_uses_workspace_cache_file ... ok
+test db_tests::holiday_replace_all_is_atomic ... ok
+test db_tests::legacy_case_usage_does_not_hide_unknown_values_fields_or_metadata_conflicts ... ok
+test db_tests::legacy_case_usage_in_packages_preserves_metadata_and_is_idempotent ... ok
+test db_tests::list_child_ids_by_case_scopes_to_case_and_spans_events ... ok
+test db_tests::create_empty_workspace_starts_without_records_and_rejects_reuse ... ok
+test db_tests::daily_task_attachment_saves_under_owner_path_with_null_case_id ... ok
+test db_tests::migrate_legacy_raw_fields_lets_a_1_1_graph_pass_the_current_contract ... ok
+test db_tests::migration_runner_adds_deleted_records_for_incremental_deletes ... ok
+test db_tests::migration_runner_adds_updated_at_indexes_for_incremental_graph ... ok
+test db_tests::migration_runner_applies_initial_schema_once ... ok
+test db_tests::migration_v6_removes_legacy_nested_authority_without_losing_child_rows ... ok
+test command_workspace_backup::tests::valid_backup_restores_over_existing_workspace_and_clears_snapshot ... ok
+test db_tests::migration_v7_converts_legacy_special_education_flag_without_losing_the_signal ... ok
+test db_tests::investigation_defaults_preserve_decisions_and_reject_invalid_stored_values ... ok
+test db_tests::legacy_case_usage_loads_from_sqlite_and_saves_without_losing_case_data ... ok
+test db_tests::parse_raw_json_preserves_parse_errors_for_repair ... ok
+test db_tests::person_crud_round_trip ... ok
+test db_tests::open_connection_enables_wal_and_pragmas ... ok
+test db_tests::replace_case_graph_rejects_cross_case_ids_without_changing_either_case ... ok
+test db_tests::replace_case_graph_prunes_removed_children_and_maps_js_event_fields ... ok
+test db_tests::replace_case_graph_rejects_duplicate_person_codes_before_writing ... ok
+test db_tests::replace_case_graph_rejects_malformed_payload_before_any_write ... ok
+test db_tests::safe_file_name_avoids_windows_reserved ... ok
+test db_tests::safe_file_name_caps_length ... ok
+test db_tests::safe_file_name_covers_all_windows_reserved_devices ... ok
+test db_tests::safe_file_name_handles_empty ... ok
+test db_tests::safe_file_name_non_reserved_lookalikes_not_prefixed ... ok
+test db_tests::safe_file_name_reserved_is_case_insensitive ... ok
+test db_tests::safe_file_name_reserved_via_path_traversal ... ok
+test db_tests::safe_file_name_strips_path_traversal ... ok
+test db_tests::replace_case_graph_strips_normalized_child_arrays_but_preserves_extensions_and_costs ... ok
+test db_tests::single_record_upserts_reject_cross_owner_rebinding ... ok
+test db_tests::template_crud_round_trip ... ok
+test db_tests::sha256_hex_streaming_matches_in_memory ... ok
+test db_tests::windows_device_identity_commands_are_current_and_hidden ... ok
+test db_tests::orphan_scan_rejects_linked_file_in_attachment_tree ... ok
+test db_tests::workspace_commands_release_mutex_before_db_call ... ok
+test db_tests::workspace_graph_validator_allows_only_fixed_ai_import_action_enum ... ok
+test db_tests::workspace_graph_validator_rejects_every_noncurrent_version_and_broken_full_graph_fk ... ok
+test db_tests::workspace_graph_validator_rejects_unknown_extensions_html_and_dispatchers ... ok
+test db_tests::missing_investigation_fields_load_without_rewriting_sqlite ... ok
+test db_tests::template_reference_batch_is_all_or_nothing ... ok
+test db_tests::load_workspace_graph_since_includes_delete_tombstones ... ok
+test db_tests::workspace_info_runs_migrations_for_existing_empty_db ... ok
+test db_tests::word_attachment_from_native_path_round_trips_after_reopen ... ok
+test db_tests::load_workspace_graph_since_returns_only_updated_rows ... ok
+test workspace_recovery_tests::atomic_replacement_never_loses_original_during_process_kill ... ok
+test workspace_recovery_tests::malformed_journal_blocks_open_without_creating_or_mutating_database ... ok
+test workspace_recovery_tests::atomic_writers_do_not_share_or_delete_each_others_staging_files ... ok
+test workspace_recovery_tests::recovery_child ... ok
+test workspace_recovery_tests::license_upgrade_recovers_intent_before_and_after_actual_process_kill ... ok
+test workspace_recovery_tests::conflicting_recovery_path_preserves_copies_until_conflict_removed ... ok
+test workspace_recovery_tests::second_process_is_refused_and_killed_owner_releases_lock ... ok
+test workspace_recovery_tests::attachment_replacement_keeps_original_on_sql_failure_and_cleans_old_file_after_success ... ok
+test workspace_recovery_tests::trial_cleanup_resumes_after_process_kill_without_touching_other_cases ... ok
+test workspace_recovery_tests::attachment_replacement_survives_process_kill_before_and_after_index_commit ... ok
+test workspace_recovery_tests::trial_creation_recovers_actual_process_kills_and_refuses_other_workspaces ... ok
+test workspace_recovery_tests::process_kill_at_every_swap_boundary_recovers_consistent_workspace ... ok
+test workspace_recovery_tests::recovery_itself_can_be_killed_and_retried_at_every_reverse_move ... ok
+
+test result: ok. 143 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.75s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Compiling chashao v1.7.1 (H:\Users\Fehu-play\Desktop\性平案件管理工具\src-tauri)
+    Finished `release` profile [optimized] target(s) in 1m 03s
+     Running unittests src\lib.rs (target\release\deps\chashao_lib-2bd08febd384a9fd.exe)
+     Running unittests src\main.rs (target\release\deps\chashao-a6ac54fc61ca6bae.exe)
+   Doc-tests chashao_lib
+Rust 文件基線一致：143 pass / 0 fail
+> npm.cmd run test:tauri:e2e
+
+> chashao-case-manager@1.7.1 test:tauri:e2e
+> node scripts/run-tauri-e2e.mjs
+
+
+[e2e] 準備 Tauri 前端資源
+Preparing Tauri frontend bundle…
+  source: H:\Users\Fehu-play\Desktop\性平案件管理工具
+  output: H:\Users\Fehu-play\Desktop\性平案件管理工具\tauri-dist
+Prepared Tauri frontend at H:\Users\Fehu-play\Desktop\性平案件管理工具\tauri-dist
+  edition tag: std
+
+[e2e] 建置 feature 隔離的 E2E 執行檔
+        Info Looking up installed tauri packages to check mismatched versions...
+   Compiling chashao v1.7.1 (H:\Users\Fehu-play\Desktop\性平案件管理工具\src-tauri)
+    Finished `release` profile [optimized] target(s) in 1m 36s
+       Built application at: H:\Users\Fehu-play\Desktop\性平案件管理工具\src-tauri\target\e2e\release\chashao.exe
+
+[e2e] 執行真實 Tauri E2E
+
+Execution of 15 workers started at 2026-09-09T13:46:02.254Z
+
+[0-0] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/archive-stream.spec.mjs
+[0-0] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/archive-stream.spec.mjs
+[0-1] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/attachment-range.spec.mjs
+[0-1] PDF range metrics: {"binary":true,"count":264786,"largest":262144,"rejected":true,"size":3148370,"text":"NATIVE RANGE TEST"}
+[0-1] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/attachment-range.spec.mjs
+[0-2] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/case-draft.spec.mjs
+[0-2] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/case-draft.spec.mjs
+[0-3] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/close-flush-disk.spec.mjs
+[0-3] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/close-flush-disk.spec.mjs
+[0-4] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/consolidation-attachments.spec.mjs
+[0-4] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/consolidation-attachments.spec.mjs
+[0-5] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/event-attachment.spec.mjs
+[0-5] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/event-attachment.spec.mjs
+[0-6] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/legacy-workspace.spec.mjs
+[0-6] (node:11832) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+[0-6] (Use `node --trace-warnings ...` to show where the warning was created)
+[0-6] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/legacy-workspace.spec.mjs
+[0-7] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/persistence-timing.spec.mjs
+[0-7] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/persistence-timing.spec.mjs
+[0-8] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/persistence.spec.mjs
+[0-8] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/persistence.spec.mjs
+[0-9] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/redaction-lifecycle.spec.mjs
+[0-9] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/redaction-lifecycle.spec.mjs
+[0-10] Warning: Cannot load "@napi-rs/canvas" package: "Error: Cannot find module '@napi-rs/canvas'
+[0-10] Require stack:
+[0-10] - H:\Users\Fehu-play\Desktop\性平案件管理工具\libs\pdfjs\pdf.min.mjs".
+[0-10] Warning: Cannot polyfill `DOMMatrix`, rendering may be broken.
+[0-10] Warning: Cannot polyfill `Path2D`, rendering may be broken.
+[0-10] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/report-print.spec.mjs
+[0-10] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/report-print.spec.mjs
+[0-11] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/simplified-investigation.spec.mjs
+[0-11] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/simplified-investigation.spec.mjs
+[0-12] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/workspace-interleave.spec.mjs
+[0-12] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/workspace-interleave.spec.mjs
+[0-13] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/workspace-lifecycle.spec.mjs
+[0-13] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/workspace-lifecycle.spec.mjs
+[0-14] RUNNING in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/workspace-ui-path.spec.mjs
+[0-14] PASSED in undefined - file:///H:/Users/Fehu-play/Desktop/%E6%80%A7%E5%B9%B3%E6%A1%88%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/tests/tauri-e2e/workspace-ui-path.spec.mjs
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-0] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-0] Session ID: 36ad00c5-67bf-46e4-b9d6-07637047bfbc
+[msedge 152.0.0.0 windows #0-0]
+[msedge 152.0.0.0 windows #0-0] » tests\tauri-e2e\archive-stream.spec.mjs
+[msedge 152.0.0.0 windows #0-0] 原生整案封存：逐檔寫入與內容驗證
+[msedge 152.0.0.0 windows #0-0]    ✓ 壓縮途中取消保留舊 ZIP 並清除暫存檔
+[msedge 152.0.0.0 windows #0-0]    ✓ 20 MB 附件不經前端 Blob，清冊、原檔與遺失附件狀態正確
+[msedge 152.0.0.0 windows #0-0]
+[msedge 152.0.0.0 windows #0-0] 2 passing (2.8s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-1] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-1] Session ID: 7627013d-b097-4536-8a30-33f4b43be39e
+[msedge 152.0.0.0 windows #0-1]
+[msedge 152.0.0.0 windows #0-1] » tests\tauri-e2e\attachment-range.spec.mjs
+[msedge 152.0.0.0 windows #0-1] 原生 PDF 分段讀取
+[msedge 152.0.0.0 windows #0-1]    ✓ 只讀需要的區段即可解析首頁，並拒絕跨版本讀取
+[msedge 152.0.0.0 windows #0-1]
+[msedge 152.0.0.0 windows #0-1] 1 passing (920ms)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-2] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-2] Session ID: 4fdd851e-1712-489a-9787-bfdee9794723
+[msedge 152.0.0.0 windows #0-2]
+[msedge 152.0.0.0 windows #0-2] » tests\tauri-e2e\case-draft.spec.mjs
+[msedge 152.0.0.0 windows #0-2] DATA-200：案件視窗草稿交易（真實 SQLite）
+[msedge 152.0.0.0 windows #0-2]    ✓ 透過案件視窗建立案件，確認後才寫入 SQLite
+[msedge 152.0.0.0 windows #0-2]    ✓ 編輯後取消，SQLite 與重載後的資料都不得改變
+[msedge 152.0.0.0 windows #0-2]    ✓ 確認儲存後才把新內容寫進 SQLite
+[msedge 152.0.0.0 windows #0-2]    ✓ 寫入封鎖時儲存案件會被擋下，且不改動 SQLite
+[msedge 152.0.0.0 windows #0-2]
+[msedge 152.0.0.0 windows #0-2] 4 passing (1.1s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-3] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-3] Session ID: 92a401cf-1ee5-480c-8ba2-b6dad03d020e
+[msedge 152.0.0.0 windows #0-3]
+[msedge 152.0.0.0 windows #0-3] » tests\tauri-e2e\close-flush-disk.spec.mjs
+[msedge 152.0.0.0 windows #0-3] PERSIST-202／QA-200：關閉前排空與真實磁碟寫入失敗
+[msedge 152.0.0.0 windows #0-3]    ✓ 關閉前的待寫入資料會先排空，之後才回報可以關閉
+[msedge 152.0.0.0 windows #0-3]    ✓ SQLite 檔唯讀時寫入必須失敗，且不得宣告已儲存
+[msedge 152.0.0.0 windows #0-3]    ✓ 磁碟寫入失敗時，關閉流程必須取消並保持視窗開啟
+[msedge 152.0.0.0 windows #0-3]    ✓ 解除唯讀後重試即可成功排空並允許關閉
+[msedge 152.0.0.0 windows #0-3]
+[msedge 152.0.0.0 windows #0-3] 4 passing (574ms)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-4] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-4] Session ID: d7a62443-1223-4110-a6c7-e5125293cf64
+[msedge 152.0.0.0 windows #0-4]
+[msedge 152.0.0.0 windows #0-4] » tests\tauri-e2e\consolidation-attachments.spec.mjs
+[msedge 152.0.0.0 windows #0-4] CONSOL-200：主秘統整保存附件與 swap 前驗證
+[msedge 152.0.0.0 windows #0-4]    ✓ 前置條件：附件原檔與父紀錄引用都已建立
+[msedge 152.0.0.0 windows #0-4]    ✓ 承辦包攜帶附件欄位時必須被拒絕，工作區不得被改動
+[msedge 152.0.0.0 windows #0-4]    ✓ 合規統整提交後，管理欄位更新且附件索引與原檔完整保留
+[msedge 152.0.0.0 windows #0-4]    ✓ 統整後重新載入，前端仍能看到附件引用
+[msedge 152.0.0.0 windows #0-4]
+[msedge 152.0.0.0 windows #0-4] 4 passing (810ms)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-5] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-5] Session ID: b382fd17-b267-4052-8097-2df6858b8749
+[msedge 152.0.0.0 windows #0-5]
+[msedge 152.0.0.0 windows #0-5] » tests\tauri-e2e\event-attachment.spec.mjs
+[msedge 152.0.0.0 windows #0-5] ATT-200：事件附件草稿交易（真實 SQLite 與原檔）
+[msedge 152.0.0.0 windows #0-5]    ✓ 新增事件附件後確認儲存，父紀錄與原檔都存在
+[msedge 152.0.0.0 windows #0-5]    ✓ 取消移除既有附件時，父紀錄與原檔都必須保留
+[msedge 152.0.0.0 windows #0-5]    ✓ 取消新增事件時，不建立節點且本次新增的原檔必須清除
+[msedge 152.0.0.0 windows #0-5]    ✓ 確認移除既有附件後，父紀錄與原檔一併清除
+[msedge 152.0.0.0 windows #0-5]    ✓ 仍有附件草稿未送出時，不得切換工作區
+[msedge 152.0.0.0 windows #0-5]
+[msedge 152.0.0.0 windows #0-5] 5 passing (817ms)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-6] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-6] Session ID: cf2e9fc5-2fff-417e-9120-d452c5c3e507
+[msedge 152.0.0.0 windows #0-6]
+[msedge 152.0.0.0 windows #0-6] » tests\tauri-e2e\legacy-workspace.spec.mjs
+[msedge 152.0.0.0 windows #0-6] 舊版資料庫：caseUsage 載入與再次儲存
+[msedge 152.0.0.0 windows #0-6]    ✓ 正式與測試案件均可開啟、編輯及重載，保留原始標記與筆記
+[msedge 152.0.0.0 windows #0-6]    ✓ 真實啟動載入失敗後仍可建立空白工作區並重新開啟
+[msedge 152.0.0.0 windows #0-6]
+[msedge 152.0.0.0 windows #0-6] 2 passing (2.1s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-7] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-7] Session ID: 0af7bf16-2d6b-4682-994e-e9b145ae4ea2
+[msedge 152.0.0.0 windows #0-7]
+[msedge 152.0.0.0 windows #0-7] » tests\tauri-e2e\persistence-timing.spec.mjs
+[msedge 152.0.0.0 windows #0-7] PERSIST-200／203／204：儲存佇列時間矩陣、ACK 與失敗重試
+[msedge 152.0.0.0 windows #0-7]    ✓ 間隔 0ms 切案，兩案最後狀態都必須完整寫入
+[msedge 152.0.0.0 windows #0-7]    ✓ 間隔 50ms 切案，兩案最後狀態都必須完整寫入
+[msedge 152.0.0.0 windows #0-7]    ✓ 間隔 249ms 切案，兩案最後狀態都必須完整寫入
+[msedge 152.0.0.0 windows #0-7]    ✓ 間隔 250ms 切案，兩案最後狀態都必須完整寫入
+[msedge 152.0.0.0 windows #0-7]    ✓ 間隔 500ms 切案，兩案最後狀態都必須完整寫入
+[msedge 152.0.0.0 windows #0-7]    ✓ 同案連續編輯只保留最後一筆快照，且不產生失敗
+[msedge 152.0.0.0 windows #0-7]    ✓ 後端拒絕整案寫入時保留待寫入快照，SQLite 完全不變且不宣告已儲存
+[msedge 152.0.0.0 windows #0-7]    ✓ 修正資料後重新寫入會取代失敗快照並成功落地
+[msedge 152.0.0.0 windows #0-7]    ✓ 重載後兩案內容與 SQLite 一致，未遺漏任何一案
+[msedge 152.0.0.0 windows #0-7]
+[msedge 152.0.0.0 windows #0-7] 9 passing (2.4s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-8] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-8] Session ID: 8be62e81-e1fb-4d14-a333-e68bb80a7815
+[msedge 152.0.0.0 windows #0-8]
+[msedge 152.0.0.0 windows #0-8] » tests\tauri-e2e\persistence.spec.mjs
+[msedge 152.0.0.0 windows #0-8] QA-201：真實 Tauri／WebView2／IPC／SQLite
+[msedge 152.0.0.0 windows #0-8]    ✓ 啟動隔離 E2E 執行檔並建立 SQLite 工作區
+[msedge 152.0.0.0 windows #0-8]    ✓ 快速切案後分別保存兩案最後狀態，重新讀取 SQLite 不會漏掉前案
+[msedge 152.0.0.0 windows #0-8]    ✓ 日常任務附件新增、移除與取消遵守草稿交易
+[msedge 152.0.0.0 windows #0-8]
+[msedge 152.0.0.0 windows #0-8] 3 passing (1.1s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-9] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-9] Session ID: 436cc5c5-edab-493a-bf2d-73583d2b5bb0
+[msedge 152.0.0.0 windows #0-9]
+[msedge 152.0.0.0 windows #0-9] » tests\tauri-e2e\redaction-lifecycle.spec.mjs
+[msedge 152.0.0.0 windows #0-9] 遮蔽工具分段讀取、翻頁與點陣輸出
+[msedge 152.0.0.0 windows #0-9]    ✓ 實際 PDF 分段預覽、快速翻頁及塗黑輸出均正確，原檔不變
+[msedge 152.0.0.0 windows #0-9]
+[msedge 152.0.0.0 windows #0-9] 1 passing (1.2s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-10] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-10] Session ID: cc0c4297-bf45-49e3-b1f0-2db586b67848
+[msedge 152.0.0.0 windows #0-10]
+[msedge 152.0.0.0 windows #0-10] » tests\tauri-e2e\report-print.spec.mjs
+[msedge 152.0.0.0 windows #0-10] 報告：WebView2 原生 A4 列印
+[msedge 152.0.0.0 windows #0-10]    ✓ 離線 PDF 資源可讀，JPEG2000 圖片可解碼且 worker 正常釋放
+[msedge 152.0.0.0 windows #0-10]    ✓ 交付報告中途取消不列印、不重複執行且只清理自身圖片
+[msedge 152.0.0.0 windows #0-10]    ✓ 附件 PDF 實際轉圖後釋放畫布，失敗時保留其他附件的圖片
+[msedge 152.0.0.0 windows #0-10]    ✓ 真實 PDF 渲染取消後停止後續頁面並釋放 loading task
+[msedge 152.0.0.0 windows #0-10]    ✓ 長文與表格完整續頁，遮蔽姓名不出現在 PDF 文字中
+[msedge 152.0.0.0 windows #0-10]
+[msedge 152.0.0.0 windows #0-10] 5 passing (2s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-11] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-11] Session ID: 5cf4315a-ea06-4279-97c3-0d178c2dab90
+[msedge 152.0.0.0 windows #0-11]
+[msedge 152.0.0.0 windows #0-11] » tests\tauri-e2e\simplified-investigation.spec.mjs
+[msedge 152.0.0.0 windows #0-11] DATA-200：簡化調查程序視窗草稿交易（真實 SQLite）
+[msedge 152.0.0.0 windows #0-11]    ✓ 儲存適用條件後才寫入 SQLite，且不改變調查路徑
+[msedge 152.0.0.0 windows #0-11]    ✓ 關閉視窗取消時，SQLite 與重載後的內容都不得改變
+[msedge 152.0.0.0 windows #0-11]    ✓ 在確認對話框按取消時，不得進入簡化調查程序
+[msedge 152.0.0.0 windows #0-11]    ✓ 確認後才進入簡化調查程序，並留下路徑歷程
+[msedge 152.0.0.0 windows #0-11]    ✓ 寫入封鎖時不得儲存適用條件，SQLite 完全不變
+[msedge 152.0.0.0 windows #0-11]
+[msedge 152.0.0.0 windows #0-11] 5 passing (836ms)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-12] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-12] Session ID: 98616bcf-783a-4226-8ec7-22e4b1d4f4f6
+[msedge 152.0.0.0 windows #0-12]
+[msedge 152.0.0.0 windows #0-12] » tests\tauri-e2e\workspace-interleave.spec.mjs
+[msedge 152.0.0.0 windows #0-12] QA-200／QA-202：工作區世代交錯與高風險固定資料組
+[msedge 152.0.0.0 windows #0-12]    ✓ 切換工作區前會先排空，未寫入的編輯不得遺失
+[msedge 152.0.0.0 windows #0-12]    ✓ 切到新工作區後看不到 A 的資料
+[msedge 152.0.0.0 windows #0-12]    ✓ 未先排空就切換工作區時，前一個工作區的編輯不得落入新工作區
+[msedge 152.0.0.0 windows #0-12]    ✓ 切回 A 後內容完好，B 只保有自己的案件
+[msedge 152.0.0.0 windows #0-12]    ✓ 高風險固定資料組寫入真實 SQLite 後，重載仍完整保留全部引用
+[msedge 152.0.0.0 windows #0-12]    ✓ 實機資料下人物刪除守門仍會擋下被引用的當事人
+[msedge 152.0.0.0 windows #0-12]
+[msedge 152.0.0.0 windows #0-12] 6 passing (1.8s)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-13] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-13] Session ID: e8807207-f649-441b-8695-b23a427b7df2
+[msedge 152.0.0.0 windows #0-13]
+[msedge 152.0.0.0 windows #0-13] » tests\tauri-e2e\workspace-lifecycle.spec.mjs
+[msedge 152.0.0.0 windows #0-13] DATA-203／PERSIST-201／PERSIST-202：工作區開啟、切換、重載與寫入守門
+[msedge 152.0.0.0 windows #0-13]    ✓ 建立工作區並在 hydrate 完成後才開放寫入
+[msedge 152.0.0.0 windows #0-13]    ✓ hydrate 未就緒時一律禁止寫入，重新同步成功後才恢復
+[msedge 152.0.0.0 windows #0-13]    ✓ 切換到另一個工作區後不得看到前一個工作區的案件
+[msedge 152.0.0.0 windows #0-13]    ✓ 已有內容的資料夾不得被當成新工作區建立
+[msedge 152.0.0.0 windows #0-13]    ✓ 切回原工作區可完整讀回先前資料，且兩邊互不污染
+[msedge 152.0.0.0 windows #0-13]    ✓ 編輯後排空佇列，SQLite 立即可直接讀回最新內容
+[msedge 152.0.0.0 windows #0-13]
+[msedge 152.0.0.0 windows #0-13] 6 passing (991ms)
+------------------------------------------------------------------
+[msedge 152.0.0.0 windows #0-14] Running: msedge (v152.0.0.0) on windows
+[msedge 152.0.0.0 windows #0-14] Session ID: 968fe972-4d7b-4023-87d1-2c8a1c40aa49
+[msedge 152.0.0.0 windows #0-14]
+[msedge 152.0.0.0 windows #0-14] » tests\tauri-e2e\workspace-ui-path.spec.mjs
+[msedge 152.0.0.0 windows #0-14] 使用者實際操作的工作區建立與切換路徑
+[msedge 152.0.0.0 windows #0-14]    ✓ 按下「建立工作區」不得跳出任何錯誤，且要開放寫入
+[msedge 152.0.0.0 windows #0-14]    ✓ 建立後可立即寫入案件，不必重開工具
+[msedge 152.0.0.0 windows #0-14]    ✓ 尚未載入任何工作區時仍能建立——不得要求「先有工作區才能建立工作區」
+[msedge 152.0.0.0 windows #0-14]    ✓ 建立案件視窗開啟時，管轄學校的預設與顯示必須一致
+[msedge 152.0.0.0 windows #0-14]    ✓ 尚未設定本校校名時，管轄學校的預設與顯示同樣必須一致
+[msedge 152.0.0.0 windows #0-14]    ✓ 連續開關建立案件視窗，管轄學校的顯示不得殘留上一次的狀態
+[msedge 152.0.0.0 windows #0-14]    ✓ 顯示狀態必須由 CSS 直接跟著選項走，不依賴 JS 時序
+[msedge 152.0.0.0 windows #0-14]    ✓ 建立案件時填入收件日，以收件日起算的法定期限必須立刻出現
+[msedge 152.0.0.0 windows #0-14]    ✓ 按下「開啟工作區」切到另一個工作區同樣不得跳錯
+[msedge 152.0.0.0 windows #0-14]
+[msedge 152.0.0.0 windows #0-14] 9 passing (4.5s)
+
+
+Spec Files:	 15 passed, 15 total (100% completed) in 00:01:13  
+
+--- 完整檢查與真實 Tauri E2E 通過，開始建置 ---
+
+> npm.cmd run tauri:prepare
+
+> chashao-case-manager@1.7.1 tauri:prepare
+> node scripts/prepare-tauri-dist.mjs
+
+Preparing Tauri frontend bundle…
+  source: H:\Users\Fehu-play\Desktop\性平案件管理工具
+  output: H:\Users\Fehu-play\Desktop\性平案件管理工具\tauri-dist
+Prepared Tauri frontend at H:\Users\Fehu-play\Desktop\性平案件管理工具\tauri-dist
+  edition tag: std
+> node scripts/verify-tauri-dist.mjs
+[verify-tauri-dist] formal bundle verified（345 個檔案逐位元組比對通過）
+> cargo clean -p chashao --release
+     Removed 776 files, 308.5MiB total
+> cargo build --release --bin chashao
+   Compiling chashao v1.7.1 (H:\Users\Fehu-play\Desktop\性平案件管理工具\src-tauri)
+    Finished `release` profile [optimized] target(s) in 1m 03s
+Output exe: H:\Users\Fehu-play\Desktop\性平案件管理工具\.local\hotfix-investigation-route\staging\叉燒正式版_20260909-2148.exe
+Size      : 17524224 bytes
+Modified  : 2026-09-09T21:48:25
+Build completed.
